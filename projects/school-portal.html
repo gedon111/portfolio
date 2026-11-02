@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>school-portal / Gideon Pasok</title>
+<meta name="description" content="A school portal for finding your section, reading the wall and seeing achievements.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Caveat:wght@600&family=Fraunces:opsz,wght@9..144,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="project.css">
+</head>
+<body class="proj">
+<canvas id="tiles" aria-hidden="true"></canvas>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M17 12H5m6-6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.2-3.1-.1-.4-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3M7 15h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-team" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14a6.5 6.5 0 0 1 3 6"/></g></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-5-5Zm0 0v5h5M9 13h6M9 17h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="header show">
+  <div class="strip"><span class="caret"></span><span>building something new</span><span class="clock" id="clock">--:--:--</span></div>
+  <nav class="nav">
+    <a class="logo" href="../index.html#home">cgp/</a>
+    <a class="nl" href="../index.html#work"><svg class="ic"><use href="#i-back"/></svg>&nbsp;All projects</a>
+    <a class="cta" href="https://github.com/gedon111" target="_blank" rel="noopener"><svg class="ic"><use href="#i-github"/></svg><span>GitHub</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+  </nav>
+  <div class="progress-bar" id="bar"></div>
+</header>
+
+<main class="wrap pwrap">
+  <section class="phero grid2">
+    <div class="cell phero-copy">
+      <span class="badge"><svg class="ic"><use href="#i-team"/></svg>Web app</span>
+      <h1 class="slash">school-portal<i>/</i></h1>
+      <p class="pitch">A school portal for finding your section, reading the wall and seeing achievements.</p>
+      <ul class="tags"><li title="React"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="React"></li><li title="Vite"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/vitejs/vitejs-original.svg" alt="Vite"></li><li title="Tailwind"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind"></li><li title="JavaScript"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="JavaScript"></li></ul>
+      <ul class="facts"><li><b>9</b><span>pages</span></li><li><b>0</b><span>servers</span></li><li><b>1</b><span>fetch interceptor</span></li></ul>
+      <div class="actions"><a class="btn-primary" href="https://github.com/gedon111/rvfmhs-web-showcase" target="_blank" rel="noopener"><span>Source and run steps</span><svg class="ic"><use href="#i-arrow"/></svg></a></div>
+    </div>
+    <figure class="cell phero-shot"><img src="../images/projects/portal/search.jpg" alt="Section finder showing a student placement result"></figure>
+  </section>
+
+  <section class="how">
+    <h2 class="slash sec-head">how-it-works<i>/</i></h2>
+    <article class="step grid2 ">
+      <figure class="cell shot-cell"><img src="../images/projects/portal/find.jpg" alt="Find your section" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">01</span><h3>Find your section</h3><p>Browse every section by grade, with its adviser, in one directory.</p></div>
+    </article>
+    <article class="step grid2 flip">
+      <figure class="cell shot-cell"><img src="../images/projects/portal/search.jpg" alt="Search by name" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">02</span><h3>Search by name</h3><p>Type part of a name and the placement record appears. Prefix and middle matches work.</p></div>
+    </article>
+    <article class="step grid2 ">
+      <figure class="cell shot-cell"><img src="../images/projects/portal/achievements.jpg" alt="Honour roll" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">03</span><h3>Honour roll</h3><p>Filter wins by role and by academics, sports, arts or leadership.</p></div>
+    </article>
+    <article class="step grid2 flip">
+      <figure class="cell shot-cell"><img src="../images/projects/portal/orgs.jpg" alt="Student orgs" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">04</span><h3>Student orgs</h3><p>Leaders and organisations in one place, behind a staff sign-in.</p></div>
+    </article>
+    <p class="note"><svg class="ic"><use href="#i-doc"/></svg>The showcase build needs no backend. A fetch interceptor answers every request from seeded data and keeps changes in the browser.</p>
+  </section>
+
+  <nav class="pnext grid2">
+    <a class="cell" href="timing-circuits.html"><svg class="ic"><use href="#i-back"/></svg><span>timing-circuits/</span></a>
+    <a class="cell right" href="backtest-bot.html"><span>backtest-bot/</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+  </nav>
+</main>
+
+<footer class="footer">
+  <div class="foot-bar"><a class="btn-ghost dark" href="../index.html#home"><svg class="ic"><use href="#i-back"/></svg><span>Back to the portfolio</span></a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../tiles.js"></script>
+<script src="project.js"></script>
+</body>
+</html>
