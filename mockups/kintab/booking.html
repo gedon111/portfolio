@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book a slot · Kintab Auto Studio</title>
+<meta name="description" content="Concept mockup: booking flow for Kintab Auto Studio, a fictional detailing studio. Nothing is sent.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="kintab.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ribbon">Concept mockup by Gideon · fictional business, not a real shop · <a href="../../projects/kintab-mockup.html">See the case study</a></div>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html">Kintab<i>.</i><small>Auto Studio</small></a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li class="m-book"><a href="booking.html" aria-current="page">Book a slot</a></li>
+    </ul>
+    <a class="btn btn-teal" href="booking.html" aria-current="page">Book a slot</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="glass phead">
+    <div class="blobs" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+    <div class="ribs" aria-hidden="true"></div>
+    <div class="scrim" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="eyebrow">Booking · demo only</span>
+      <h1>Four steps and you're in.</h1>
+      <p class="lead">This is a mockup, so nothing is sent or saved. Try it anyway, the total updates as you go.</p>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:clamp(32px,5vw,56px)">
+    <div class="wrap">
+      <ol class="steps" aria-label="Booking steps">
+        <li><b>1</b>Car size</li><li><b>2</b>Package</li><li><b>3</b>Date and time</li><li><b>4</b>Your details</li>
+      </ol>
+      <div class="wiz">
+        <div>
+          <form class="panel" id="wizard" novalidate onsubmit="return false">
+            <div data-pane>
+              <h2>What are we detailing?</h2><p>Size sets the price, since bigger cars take longer.</p>
+              <div class="opts" id="size-opts"></div>
+            </div>
+            <div data-pane hidden>
+              <h2>Choose a package</h2><p>Prices shown are for the size you picked.</p>
+              <div class="opts" id="pkg-opts"></div>
+            </div>
+            <div data-pane hidden>
+              <h2>When should we expect you?</h2><p>Multi-day services start at the time you choose and we'll text when it's ready.</p>
+              <div class="row2">
+                <div class="field"><label for="date">Date</label><input type="date" id="date" name="date"></div>
+                <div class="field"><label for="time">Drop-off time</label>
+                  <select id="time" name="time"><option value="">Pick a slot</option><option>8:00 AM</option><option>10:00 AM</option><option>1:00 PM</option><option>3:00 PM</option></select></div>
+              </div>
+            </div>
+            <div data-pane hidden>
+              <h2>Last bit: who's coming?</h2><p>We only use this to confirm the slot. In this mockup, it never leaves your browser.</p>
+              <div class="field"><label for="name">Full name</label><input id="name" name="name" autocomplete="off" placeholder="Juan Dela Cruz"></div>
+              <div class="field"><label for="phone">Mobile number</label><input id="phone" name="phone" inputmode="tel" autocomplete="off" placeholder="0917 123 4567"></div>
+            </div>
+            <p class="err" id="err" role="alert"></p>
+            <div class="nav-btns">
+              <button type="button" class="btn btn-ghost" id="back">Back</button>
+              <button type="button" class="btn btn-teal" id="next"><span>Continue</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+            </div>
+          </form>
+          <div class="panel booked" id="done" tabindex="-1">
+            <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m5 12 5 5 9-10"/></svg></span>
+            <h2>Salamat, <span class="who"></span>! You're booked (pretend).</h2>
+            <p>Reference <span class="ref"></span>. In a real shop you'd get a text right now. This is a demo, so nothing was sent.</p>
+            <div class="acts"><a class="btn btn-ghost" href="booking.html">Start over</a><a class="btn btn-ghost" href="index.html">Back home</a></div>
+          </div>
+        </div>
+        <aside class="panel summary" aria-live="polite">
+          <span class="kicker">Summary</span>
+          <dl>
+            <dt>Car</dt><dd id="sum-size">—</dd>
+            <dt>Package</dt><dd id="sum-pkg">—</dd>
+            <dt>When</dt><dd id="sum-when">—</dd>
+          </dl>
+          <div class="total"><span>Total</span><b id="sum-total">₱0</b></div>
+          <p class="fine">Pay at the studio by cash, GCash or card. No deposit for washes.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><a class="logo" href="index.html">Kintab<i>.</i></a><p>Indoor detailing studio. Open Tuesday to Sunday, 8 AM to 6 PM.</p></div>
+    <div><h4>Studio</h4><ul><li><a href="services.html">Services</a></li><li><a href="booking.html">Booking</a></li><li><a href="about.html">About</a></li></ul></div>
+    <div><h4>Visit</h4><ul><li>Unit 4, Lakan Bldg. (fictional)</li><li>Teachers Village, QC</li><li>0917 000 0000</li></ul></div>
+    <div><h4>Social</h4><ul><li><a href="#" aria-disabled="true">Facebook</a></li><li><a href="#" aria-disabled="true">Instagram</a></li><li><a href="#" aria-disabled="true">TikTok</a></li></ul></div>
+    <div class="legal"><span>Kintab Auto Studio is a fictional business. Concept mockup by Gideon.</span><a href="../../index.html#mockups">← Back to the portfolio</a></div>
+  </div>
+</footer>
+<script src="kintab.js"></script>
+</body>
+</html>

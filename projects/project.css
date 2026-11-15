@@ -75,3 +75,16 @@
 }
 
 .phero-shot,.step .shot-cell,.award-photo{grid-template-columns:minmax(0,1fr)}
+
+/* mockup case studies: palette strip */
+.swatches{list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--rule)}
+.swatches li{display:flex;flex-direction:column;gap:4px;padding:18px var(--pad) 22px}
+.swatches li::before{content:"";display:block;height:72px;margin-bottom:10px;background:var(--c);border:1px solid var(--rule)}
+.swatches li+li{border-left:1px solid var(--rule)}
+.swatches b{font:500 16px/1.2 var(--grotesk)}
+.swatches span{font:400 13px/1 var(--mono);color:var(--muted)}
+@media (max-width:860px){.swatches{grid-template-columns:repeat(2,minmax(0,1fr))}.swatches li+li{border-left:0}.swatches li:nth-child(2n){border-left:1px solid var(--rule)}.swatches li:nth-child(n+3){border-top:1px solid var(--rule)}}
+
+/* awards moved from the home page */
+.awards .award.flip .award-photo{order:0}
+@media (min-width:861px){.awards .award .cell+.cell{border-left:1px solid var(--rule)}}

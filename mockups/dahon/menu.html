@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Menu · Dahon Coffee House</title>
+<meta name="description" content="Concept mockup: the menu of Dahon Coffee House, a fictional cafe in Baguio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=JetBrains+Mono:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+<link rel="stylesheet" href="dahon.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ribbon">Concept mockup by Gideon · fictional business, not a real cafe · <a href="../../projects/dahon-mockup.html">See the case study</a></div>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 26C6 12 16 5 28 4c0 13-8 22-22 22Z" fill="#4f8a3c"/><path d="M6 26 22 10" stroke="#f3ecda" stroke-width="1.6" stroke-linecap="round"/></svg>Dahon<small>Coffee House</small></a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html" aria-current="page">Menu</a></li>
+      <li><a href="story.html">Our story</a></li>
+      <li><a href="visit.html">Visit</a></li>
+      <li class="m-cta"><a href="visit.html#reserve-sec">Reserve a table</a></li>
+    </ul>
+    <a class="btn btn-leaf" href="visit.html#reserve-sec">Reserve</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="phead">
+    <div class="wrap">
+      <span class="eyebrow">Menu · prices in pesos, VAT included</span>
+      <h1>Everything we pour and <em>bake</em>.</h1>
+      <p class="lead">Highlighted items are what the regulars order. Oat milk and an extra shot are on the house on weekdays before 9.</p>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:clamp(16px,3vw,32px)">
+    <div class="wrap">
+      <div class="tabs" role="group" aria-label="Filter the menu">
+        <button type="button" data-f="all" aria-pressed="true">Everything</button>
+        <button type="button" data-f="coffee" aria-pressed="false">Coffee</button>
+        <button type="button" data-f="nocoffee" aria-pressed="false">Not coffee</button>
+        <button type="button" data-f="bakes" aria-pressed="false">From the oven</button>
+        <button type="button" data-f="plates" aria-pressed="false">Plates</button>
+      </div>
+      <div class="menu-card sheet torn rv">
+        <h2>Dahon</h2>
+        <p class="sub">Coffee house · est. 2022 · Baguio</p>
+        <div class="cols">
+          <div>
+            <div class="group" data-cat="coffee">
+              <h3>Espresso bar</h3>
+              <div class="item"><div class="row"><span class="nm">Barako americano</span><span class="pr">₱110</span></div><p>Batangas barako and Benguet arabica, bold and a little smoky.</p></div>
+              <div class="item"><div class="row"><span class="nm">Flat white</span><span class="pr">₱140</span></div><p>Double ristretto, thin silky milk. 8 oz.</p></div>
+              <div class="item"><div class="row"><span class="nm"><span class="hl">Iced pandan latte</span><span class="tag">bestseller</span></span><span class="pr">₱165</span></div><p>House pandan syrup, fresh milk, double shot.</p></div>
+              <div class="item"><div class="row"><span class="nm">Ube spanish latte</span><span class="pr">₱175</span></div><p>Ube halaya and condensed milk, hot or iced.</p></div>
+              <div class="item"><div class="row"><span class="nm">Muscovado cortado</span><span class="pr">₱135</span></div><p>Negros muscovado, equal parts espresso and milk.</p></div>
+            </div>
+            <div class="group" data-cat="coffee">
+              <h3>Slow bar</h3>
+              <div class="item"><div class="row"><span class="nm">Pour-over, Sagada single origin</span><span class="pr">₱180</span></div><p>Notes of dalandan, brown sugar and black tea.</p></div>
+              <div class="item"><div class="row"><span class="nm"><span class="hl">Calamansi honey cold brew</span></span><span class="pr">₱150</span></div><p>18-hour cold brew, wild honey, a squeeze of calamansi.</p></div>
+            </div>
+          </div>
+          <div>
+            <div class="group" data-cat="nocoffee">
+              <h3>Not coffee</h3>
+              <div class="item"><div class="row"><span class="nm"><span class="hl">Tablea tsokolate</span></span><span class="pr">₱150</span></div><p>Davao cacao tablea, whisked thick with a batidor.</p></div>
+              <div class="item"><div class="row"><span class="nm">Strawberry taho cream</span><span class="pr">₱140</span></div><p>Silken tofu, arnibal, La Trinidad strawberries. Seasonal.</p></div>
+              <div class="item"><div class="row"><span class="nm">Salabat</span><span class="pr">₱95</span></div><p>Fresh ginger tea with muscovado. Good for the cold Baguio mornings.</p></div>
+            </div>
+            <div class="group" data-cat="bakes">
+              <h3>From the oven</h3>
+              <div class="item"><div class="row"><span class="nm"><span class="hl">Ensaymada, queso de bola</span><span class="tag">bestseller</span></span><span class="pr">₱95</span></div><p>Brioche-soft, butter and sugar, grated Edam on top.</p></div>
+              <div class="item"><div class="row"><span class="nm">Ube cheese pandesal</span><span class="pr">₱45</span></div><p>Out at 3 PM daily. Two per table.</p></div>
+              <div class="item"><div class="row"><span class="nm">Pandan crinkles (3 pcs)</span><span class="pr">₱80</span></div><p>Chewy, coconut-scented, powdered sugar.</p></div>
+            </div>
+            <div class="group" data-cat="plates">
+              <h3>Plates</h3>
+              <div class="item"><div class="row"><span class="nm">Tuyo pasta</span><span class="pr">₱260</span></div><p>Flaked dried herring, garlic, house chilli oil.</p></div>
+              <div class="item"><div class="row"><span class="nm">Longganisa toast</span><span class="pr">₱220</span></div><p>Sourdough, Vigan longganisa, soft egg, atchara.</p></div>
+            </div>
+          </div>
+        </div>
+        <p class="legend"><span><span class="hl">Highlighted</span> = regulars' picks</span><span>Oat milk +₱0 · Extra shot +₱30 · Iced +₱10</span></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><a class="logo" href="index.html">Dahon</a><p>A small cafe with a long table, a roaster in the back, and a cat named Kape.</p></div>
+    <div><h4>Cafe</h4><ul><li><a href="menu.html">Menu</a></li><li><a href="story.html">Our story</a></li><li><a href="visit.html">Visit</a></li></ul></div>
+    <div><h4>Find us</h4><ul><li>2F Pine Row Bldg. (fictional)</li><li>Upper Session Rd., Baguio</li><li>0918 000 0000</li></ul></div>
+    <div><h4>Follow</h4><ul><li><a href="#" aria-disabled="true">Instagram</a></li><li><a href="#" aria-disabled="true">Facebook</a></li><li><a href="#" aria-disabled="true">TikTok</a></li></ul></div>
+    <div class="legal"><span>Dahon Coffee House is a fictional business. Concept mockup by Gideon.</span><a href="../../index.html#mockups">← Back to the portfolio</a></div>
+  </div>
+</footer>
+<script src="dahon.js"></script>
+</body>
+</html>

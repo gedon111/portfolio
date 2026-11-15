@@ -25,5 +25,11 @@ if (!reduce) {
     gsap.from(s.querySelectorAll(".step-copy h3, .step-copy p"), { y: 30, opacity: 0, stagger: 0.12, duration: 0.8, ease: "power3.out",
       scrollTrigger: { trigger: s, start: "top 65%" } });
   });
+  document.querySelectorAll(".award").forEach(a => {
+    gsap.from(a.querySelector(".place b"), { yPercent: 50, opacity: 0, duration: 1, ease: "back.out(2)",
+      scrollTrigger: { trigger: a, start: "top 70%" } });
+    gsap.from(a.querySelector(".award-photo img"), { y: 50, rotate: a.classList.contains("flip") ? -2 : 2, opacity: 0, duration: 1.1, ease: "power3.out",
+      scrollTrigger: { trigger: a, start: "top 75%" } });
+  });
   gsap.from(".facts li", { y: 24, opacity: 0, stagger: 0.1, duration: 0.7, delay: 0.5, ease: "back.out(2)" });
 }

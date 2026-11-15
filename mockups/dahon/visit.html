@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Visit and reserve · Dahon Coffee House</title>
+<meta name="description" content="Concept mockup: location, hours and table reservations for Dahon Coffee House, a fictional cafe. Nothing is sent.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=JetBrains+Mono:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+<link rel="stylesheet" href="dahon.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ribbon">Concept mockup by Gideon · fictional business, not a real cafe · <a href="../../projects/dahon-mockup.html">See the case study</a></div>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 26C6 12 16 5 28 4c0 13-8 22-22 22Z" fill="#4f8a3c"/><path d="M6 26 22 10" stroke="#f3ecda" stroke-width="1.6" stroke-linecap="round"/></svg>Dahon<small>Coffee House</small></a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="story.html">Our story</a></li>
+      <li><a href="visit.html" aria-current="page">Visit</a></li>
+      <li class="m-cta"><a href="#reserve-sec">Reserve a table</a></li>
+    </ul>
+    <a class="btn btn-leaf" href="#reserve-sec">Reserve</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="phead">
+    <div class="wrap">
+      <span class="eyebrow">Visit</span>
+      <h1>Up the stairs, past the <em>pine</em> tree.</h1>
+      <p class="lead">Second floor, above the bookshop, a short walk from Session Road. Look for the green door with a leaf on it.</p>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:clamp(16px,3vw,32px)">
+    <div class="wrap split">
+      <figure class="map sheet torn tilt rv">
+        <svg viewBox="0 0 520 420" role="img" aria-label="Hand-drawn map: Dahon is on Upper Session Road, two blocks up from Burnham Park">
+          <defs><filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter></defs>
+          <g filter="url(#wobble)" fill="none" stroke="#2a2622" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M40 360C140 300 220 250 300 170S440 60 500 40" stroke-width="16" stroke-opacity=".12"/>
+            <path d="M40 360C140 300 220 250 300 170S440 60 500 40" stroke-width="2.4"/>
+            <path d="M120 40c20 80 40 150 40 230s-10 110-20 140" stroke-width="2"/>
+            <path d="M330 400c-20-60-30-120-10-200" stroke-width="2"/>
+            <ellipse cx="110" cy="330" rx="70" ry="34" stroke-width="2" fill="#9cbf7a" fill-opacity=".35"/>
+            <g stroke-width="2" fill="#4f8a3c" fill-opacity=".25"><path d="M420 300l14-30 14 30Z"/><path d="M446 310l14-34 14 34Z"/><path d="M60 120l12-26 12 26Z"/><path d="M84 132l12-28 12 28Z"/></g>
+          </g>
+          <g font-family="Caveat, cursive" font-size="22" fill="#2a2622">
+            <text x="300" y="235" transform="rotate(-36 300 235)">Session Rd.</text>
+            <text x="30" y="404">Burnham Park</text>
+            <text x="168" y="70">Bookshop lane</text>
+            <text x="402" y="350">pine trees</text>
+          </g>
+          <g transform="translate(352 118)">
+            <path d="M0 0c-16-22-26-36-26-50a26 26 0 0 1 52 0c0 14-10 28-26 50Z" fill="#8e2f2a"/>
+            <circle cx="0" cy="-50" r="9" fill="#f3ecda"/>
+          </g>
+          <text x="384" y="76" font-family="Newsreader, serif" font-style="italic" font-size="26" fill="#2a2622">Dahon!</text>
+          <path d="M380 82c-10 8-16 14-20 24" stroke="#2a2622" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </figure>
+      <div class="rv">
+        <span class="kicker">Hours and address</span>
+        <ul class="hours">
+          <li>Tuesday to Friday <span>7 AM to 9 PM</span></li>
+          <li>Saturday and Sunday <span>7 AM to 10 PM</span></li>
+          <li>Monday <span>Closed</span></li>
+          <li>Address <span>2F Pine Row Bldg. (fictional), Upper Session Rd.</span></li>
+          <li>Parking <span>Pay parking next door</span></li>
+        </ul>
+        <p style="margin-top:22px;color:var(--ink-2);font-size:17px">Walk-ins are always welcome. Reserve if you're a group of five or more, or if you want the window seats during the weekend fog.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="reserve-sec" style="padding-top:0">
+    <div class="wrap split">
+      <div class="rv">
+        <span class="kicker">Reserve · demo only</span>
+        <h2 style="font:500 clamp(34px,4vw,52px)/1.05 var(--serif);letter-spacing:-.02em">Save a seat at the <span class="hl">long table</span>.</h2>
+        <p style="margin-top:16px;color:var(--ink-2);max-width:40ch">This is a mockup, so the form never sends anything. Fill it in to see how a confirmation would look.</p>
+      </div>
+      <div class="sheet torn tilt-r rv">
+        <form class="form" id="reserve" novalidate>
+          <h2>Table request</h2>
+          <p>We hold tables for 15 minutes.</p>
+          <div class="field"><label for="r-name">Name</label><input id="r-name" name="name" autocomplete="off" placeholder="Maria Santos"></div>
+          <div class="row2">
+            <div class="field"><label for="r-date">Date</label><input type="date" id="r-date" name="date"></div>
+            <div class="field"><label for="r-time">Time</label><select id="r-time" name="time"><option value="">Pick a time</option><option>8:00 AM</option><option>10:00 AM</option><option>1:00 PM</option><option>4:00 PM</option><option>7:00 PM</option></select></div>
+          </div>
+          <div class="field"><label for="r-pax">Guests</label><select id="r-pax" name="pax"><option>2</option><option>3</option><option>4</option><option selected>5</option><option>6</option><option>8</option><option>10</option></select></div>
+          <div class="field"><label for="r-note">Anything we should know?</label><textarea id="r-note" name="note" placeholder="Birthday, high chair, window seat..."></textarea></div>
+          <p class="err" id="r-err" role="alert"></p>
+          <button class="btn btn-leaf" type="submit">Request table</button>
+        </form>
+        <div class="form thanks" id="thanks" tabindex="-1">
+          <span class="hand">Salamat, <span class="who"></span>!</span>
+          <p style="margin-top:12px">Table for <b class="pax"></b> on <b class="when"></b>. Reference <span class="ref"></span>.</p>
+          <p style="margin-top:12px;color:var(--ink-2);font-size:16px">In a real cafe you'd get a text now. This is a demo, so nothing was sent.</p>
+          <div class="acts"><a class="btn btn-ink" href="visit.html#reserve-sec">Start over</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><a class="logo" href="index.html">Dahon</a><p>A small cafe with a long table, a roaster in the back, and a cat named Kape.</p></div>
+    <div><h4>Cafe</h4><ul><li><a href="menu.html">Menu</a></li><li><a href="story.html">Our story</a></li><li><a href="visit.html">Visit</a></li></ul></div>
+    <div><h4>Find us</h4><ul><li>2F Pine Row Bldg. (fictional)</li><li>Upper Session Rd., Baguio</li><li>0918 000 0000</li></ul></div>
+    <div><h4>Follow</h4><ul><li><a href="#" aria-disabled="true">Instagram</a></li><li><a href="#" aria-disabled="true">Facebook</a></li><li><a href="#" aria-disabled="true">TikTok</a></li></ul></div>
+    <div class="legal"><span>Dahon Coffee House is a fictional business. Concept mockup by Gideon.</span><a href="../../index.html#mockups">← Back to the portfolio</a></div>
+  </div>
+</footer>
+<script src="dahon.js"></script>
+</body>
+</html>

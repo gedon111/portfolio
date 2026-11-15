@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>kintab-mockup / Gideon Pasok</title>
+<meta name="description" content="Kintab Auto Studio: a concept website for a fictional car detailing shop, built on the Fluted glass theme.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Caveat:wght@600&family=Fraunces:opsz,wght@9..144,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="project.css">
+</head>
+<body class="proj">
+<canvas id="tiles" aria-hidden="true"></canvas>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M17 12H5m6-6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.2-3.1-.1-.4-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-5-5Zm0 0v5h5M9 13h6M9 17h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-brush" viewBox="0 0 24 24"><path d="M4 20c3 0 5-1.5 5-4a2.5 2.5 0 0 0-5 0c0 1.5-1 2.5-2 3M9.5 13.5 20 3M7.5 11.5l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="header show">
+  <div class="strip"><span class="caret"></span><span>building something new</span><span class="clock" id="clock">--:--:--</span></div>
+  <nav class="nav">
+    <a class="logo" href="../index.html#home">cgp/</a>
+    <a class="nl" href="../index.html#mockups"><svg class="ic"><use href="#i-back"/></svg>&nbsp;All mockups</a>
+    <a class="cta" href="https://github.com/gedon111" target="_blank" rel="noopener"><svg class="ic"><use href="#i-github"/></svg><span>GitHub</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+  </nav>
+  <div class="progress-bar" id="bar"></div>
+</header>
+
+<main class="wrap pwrap">
+  <section class="phero grid2">
+    <div class="cell phero-copy">
+      <span class="badge"><svg class="ic"><use href="#i-brush"/></svg>Concept mockup · fictional business</span>
+      <h1 class="slash">kintab-mockup<i>/</i></h1>
+      <p class="pitch">A four-page site for a made-up car detailing studio in Quezon City. Dark, glossy, and lit through fluted glass.</p>
+      <ul class="tags"><li title="HTML"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/html5/html5-original.svg" alt="HTML"></li><li title="CSS"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/css3/css3-original.svg" alt="CSS"></li><li title="JavaScript"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="JavaScript"></li></ul>
+      <ul class="facts"><li><b>4</b><span>pages</span></li><li><b>1</b><span>accent colour</span></li><li><b>0</b><span>photos</span></li></ul>
+      <div class="actions"><a class="btn-primary" href="../mockups/kintab/index.html"><span>Open the live mockup</span><svg class="ic"><use href="#i-arrow"/></svg></a></div>
+    </div>
+    <figure class="cell phero-shot"><img src="../images/projects/mockups/kintab-index.jpg" alt="Kintab home page: a headline beside glowing fluted glass"></figure>
+  </section>
+
+  <section class="how">
+    <h2 class="slash sec-head">design-system<i>/</i></h2>
+    <div class="qs grid3">
+      <div class="cell"><span class="num">01</span><h3>Fluted glass</h3><p>Colour blobs glow under a blurred layer of vertical ribs. The ribs fade out on the text side so copy stays readable.</p></div>
+      <div class="cell"><span class="num">02</span><h3>Water beads</h3><p>The before-and-after slider ends on a coated panel covered in rain beads, each one a radial highlight with a specular dot.</p></div>
+      <div class="cell"><span class="num">03</span><h3>One accent</h3><p>Electric teal goes only on the booking button and the glow behind the glass. Everything else stays void black and bone.</p></div>
+    </div>
+    <ul class="swatches" aria-label="Palette">
+      <li style="--c:#060806"><b>Void</b><span>#060806</span></li>
+      <li style="--c:#eef3f0"><b>Bone</b><span>#eef3f0</span></li>
+      <li style="--c:#2ee6c9"><b>Electric teal</b><span>#2ee6c9</span></li>
+      <li style="--c:#1f4fd1"><b>Deep blue glow</b><span>#1f4fd1</span></li>
+      <li style="--c:#5b2a9a"><b>Violet glow</b><span>#5b2a9a</span></li>
+    </ul>
+  </section>
+
+  <section class="how">
+    <h2 class="slash sec-head">the-pages<i>/</i></h2>
+    <article class="step grid2 ">
+      <figure class="cell shot-cell"><img src="../images/projects/mockups/kintab-index.jpg" alt="Kintab home page" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">01</span><h3>Home</h3><p>Headline beside the fluted glass, a services teaser, a before-and-after slider and reviews.</p></div>
+    </article>
+    <article class="step grid2 flip">
+      <figure class="cell shot-cell"><img src="../images/projects/mockups/kintab-services.jpg" alt="Kintab services and prices" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">02</span><h3>Services</h3><p>Wash, interior, paint correction, ceramic coating and PPF, priced in pesos by car size.</p></div>
+    </article>
+    <article class="step grid2 ">
+      <figure class="cell shot-cell"><img src="../images/projects/mockups/kintab-booking.jpg" alt="Kintab booking steps" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">03</span><h3>Booking</h3><p>Pick a car size, a package and a slot, and the total updates as you go. Demo only, nothing is sent.</p></div>
+    </article>
+    <article class="step grid2 flip">
+      <figure class="cell shot-cell"><img src="../images/projects/mockups/kintab-about.jpg" alt="Kintab about page" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">04</span><h3>About</h3><p>The studio, the process step by step, a drawn map and a FAQ.</p></div>
+    </article>
+    <p class="note"><svg class="ic"><use href="#i-doc"/></svg>Kintab Auto Studio is not a real business. Every visual is drawn with CSS and SVG, so the site loads no photos.</p>
+  </section>
+
+  <nav class="pnext grid2">
+    <a class="cell" href="research-paper.html"><svg class="ic"><use href="#i-back"/></svg><span>research-paper/</span></a>
+    <a class="cell right" href="dahon-mockup.html"><span>dahon-mockup/</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+  </nav>
+</main>
+
+<footer class="footer">
+  <div class="foot-bar"><a class="btn-ghost dark" href="../index.html#mockups"><svg class="ic"><use href="#i-back"/></svg><span>Back to the portfolio</span></a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../tiles.js"></script>
+<script src="project.js"></script>
+</body>
+</html>

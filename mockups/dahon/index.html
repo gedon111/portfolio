@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dahon Coffee House · Baguio</title>
+<meta name="description" content="Concept mockup: Dahon Coffee House, a fictional neighbourhood cafe in Baguio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=JetBrains+Mono:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+<link rel="stylesheet" href="dahon.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ribbon">Concept mockup by Gideon · fictional business, not a real cafe · <a href="../../projects/dahon-mockup.html">See the case study</a></div>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 26C6 12 16 5 28 4c0 13-8 22-22 22Z" fill="#4f8a3c"/><path d="M6 26 22 10" stroke="#f3ecda" stroke-width="1.6" stroke-linecap="round"/></svg>Dahon<small>Coffee House</small></a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="index.html" aria-current="page">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="story.html">Our story</a></li>
+      <li><a href="visit.html">Visit</a></li>
+      <li class="m-cta"><a href="visit.html#reserve-sec">Reserve a table</a></li>
+    </ul>
+    <a class="btn btn-leaf" href="visit.html#reserve-sec">Reserve</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Neighbourhood cafe · Baguio City</span>
+        <h1>Slow coffee, <em>pandan</em> and good company.</h1>
+        <p class="lead">Benguet beans roasted every Monday, pastries from our own oven, and a long table where nobody rushes you out. <span class="hl">Tara, kape tayo.</span></p>
+        <div class="acts">
+          <a class="btn btn-leaf" href="menu.html">See the menu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a class="btn btn-ink" href="visit.html">Find us</a>
+        </div>
+        <p class="open-now"><i></i><span id="open-now">Open daily except Mondays, 7 AM to 9 PM</span></p>
+      </div>
+      <div class="cup-wrap">
+        <svg class="cup" viewBox="0 0 420 400" role="img" aria-label="Drawing of a steaming cup of pandan latte with a leaf beside it">
+          <defs><filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter></defs>
+          <g filter="url(#rough)">
+            <ellipse cx="190" cy="340" rx="150" ry="22" fill="#c9bea6" opacity=".7"/>
+            <ellipse cx="190" cy="330" rx="140" ry="24" fill="#f6efdf" stroke="#2a2622" stroke-width="3"/>
+            <path d="M88 170h204l-14 120c-4 30-30 46-60 46h-56c-30 0-56-16-60-46Z" fill="#f6efdf" stroke="#2a2622" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M290 196c34-6 52 12 48 36-4 26-28 38-58 34" fill="none" stroke="#2a2622" stroke-width="3.2" stroke-linecap="round"/>
+            <ellipse cx="190" cy="172" rx="102" ry="16" fill="#9cbf7a" stroke="#2a2622" stroke-width="3"/>
+            <path d="M156 170c14-10 50-10 66 0-10 8-54 8-66 0Z" fill="#e9f0d6" opacity=".9"/>
+            <path d="M104 230h172" stroke="#4f8a3c" stroke-width="10" opacity=".85"/>
+            <g class="steam" fill="none" stroke="#2a2622" stroke-width="2.6" stroke-linecap="round" opacity=".55">
+              <path d="M150 140c-14-18 14-28 0-50"/><path d="M190 136c-14-18 14-28 0-52"/><path d="M230 140c-14-18 14-28 0-50"/>
+            </g>
+            <g class="leafy">
+              <path d="M300 300c28-74 76-104 108-106-6 70-48 112-108 106Z" fill="#4f8a3c" stroke="#2a2622" stroke-width="3"/>
+              <path d="M300 300c30-30 60-64 100-98" fill="none" stroke="#e9e1cf" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M300 352c-6-34 6-62 22-80" fill="none" stroke="#2a2622" stroke-width="3" stroke-linecap="round"/>
+            </g>
+          </g>
+        </svg>
+        <div class="note sheet torn tilt-r"><span class="pin" aria-hidden="true"></span><span class="hand">Today only!</span>Ube cheese pandesal, fresh at 3 PM. Two per table, please.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:clamp(24px,4vw,48px)">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="kicker">Signature drinks</span><h2>Three we're <em>known</em> for.</h2></div><p>Made with Benguet arabica and milk from a dairy co-op in La Trinidad. Oat milk is free.</p></div>
+      <div class="drinks" data-stagger>
+        <article class="drink sheet torn">
+          <svg viewBox="0 0 200 170" aria-hidden="true"><g fill="none" stroke="#2a2622" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M64 46h72l-8 106H72Z" fill="#f6efdf"/><path d="M66 80h68" /><path d="M68 80l4 72h56l4-72Z" fill="#9cbf7a"/><path d="M66 46h68"/><path d="M100 46V18M100 18h14"/></g><g fill="#fff" stroke="#2a2622" stroke-width="1.6"><rect x="84" y="96" width="14" height="14" rx="2" transform="rotate(14 91 103)"/><rect x="104" y="112" width="14" height="14" rx="2" transform="rotate(-10 111 119)"/></g></svg>
+          <h3>Iced pandan latte</h3><p>House pandan syrup, double shot, fresh milk over ice. Sweet like buko pandan, not like candy.</p>
+          <span class="price"><span>16 oz</span><span>₱165</span></span>
+        </article>
+        <article class="drink sheet torn">
+          <svg viewBox="0 0 200 170" aria-hidden="true"><g fill="none" stroke="#2a2622" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="100" cy="148" rx="70" ry="10" fill="#e9e1cf"/><path d="M50 74h100l-8 54c-2 12-12 20-24 20H82c-12 0-22-8-24-20Z" fill="#f6efdf"/><path d="M150 86c18-2 24 8 22 18-2 12-14 16-26 14"/><ellipse cx="100" cy="75" rx="50" ry="9" fill="#7e5aa6"/><path d="M84 74c6-6 26-6 32 0" stroke="#efe3ff"/><path d="M84 54c-8-10 8-14 0-26M116 54c-8-10 8-14 0-26" opacity=".5"/></g></svg>
+          <h3>Ube spanish latte</h3><p>Real ube halaya stirred into condensed milk, then espresso. Purple, rich and a little nostalgic.</p>
+          <span class="price"><span>12 oz, hot</span><span>₱175</span></span>
+        </article>
+        <article class="drink sheet torn">
+          <svg viewBox="0 0 200 170" aria-hidden="true"><g fill="none" stroke="#2a2622" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="100" cy="148" rx="70" ry="10" fill="#e9e1cf"/><path d="M58 70h84v52c0 16-12 26-28 26H86c-16 0-28-10-28-26Z" fill="#f6efdf"/><path d="M142 82c18-2 24 8 22 18-2 12-14 16-26 14"/><ellipse cx="100" cy="71" rx="42" ry="8" fill="#5b3a26"/><path d="M28 120l26-20 10 8-24 22Z" fill="#7a4b2c"/><path d="M84 52c-8-10 8-14 0-26M112 52c-8-10 8-14 0-26" opacity=".5"/></g></svg>
+          <h3>Tablea tsokolate</h3><p>Pure cacao tablea from Davao, whisked with a batidor until it foams. Thick enough to dip ensaymada in.</p>
+          <span class="price"><span>10 oz, hot</span><span>₱150</span></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap specials">
+      <div class="board sheet torn tilt rv">
+        <span class="hand">This week on the board</span>
+        <ul>
+          <li>Calamansi honey cold brew <b>₱150</b></li>
+          <li>Ensaymada with queso de bola <b>₱95</b></li>
+          <li>Strawberry taho cream (Baguio berries!) <b>₱140</b></li>
+          <li>Tuyo pasta, house chilli oil <b>₱260</b></li>
+        </ul>
+        <span class="stamp" aria-hidden="true">Limited</span>
+      </div>
+      <div class="rv">
+        <span class="kicker">Hours</span>
+        <h2 style="font:500 clamp(32px,3.8vw,48px)/1.05 var(--serif);letter-spacing:-.02em">Come early for the <span class="hl">pandesal</span>.</h2>
+        <ul class="hours">
+          <li>Tuesday to Friday <span>7 AM to 9 PM</span></li>
+          <li>Saturday and Sunday <span>7 AM to 10 PM</span></li>
+          <li>Monday <span>Closed, we're roasting</span></li>
+        </ul>
+        <div class="acts"><a class="btn btn-ink" href="visit.html">Directions</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><a class="logo" href="index.html">Dahon</a><p>A small cafe with a long table, a roaster in the back, and a cat named Kape.</p></div>
+    <div><h4>Cafe</h4><ul><li><a href="menu.html">Menu</a></li><li><a href="story.html">Our story</a></li><li><a href="visit.html">Visit</a></li></ul></div>
+    <div><h4>Find us</h4><ul><li>2F Pine Row Bldg. (fictional)</li><li>Upper Session Rd., Baguio</li><li>0918 000 0000</li></ul></div>
+    <div><h4>Follow</h4><ul><li><a href="#" aria-disabled="true">Instagram</a></li><li><a href="#" aria-disabled="true">Facebook</a></li><li><a href="#" aria-disabled="true">TikTok</a></li></ul></div>
+    <div class="legal"><span>Dahon Coffee House is a fictional business. Concept mockup by Gideon.</span><a href="../../index.html#mockups">← Back to the portfolio</a></div>
+  </div>
+</footer>
+<script src="dahon.js"></script>
+</body>
+</html>

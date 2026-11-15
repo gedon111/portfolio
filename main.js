@@ -194,9 +194,11 @@ document.fonts.ready.then(() => {
   if (innerWidth > 1000) {
     // offsetLeft ignores transforms, so re-measuring on resize never drifts
     const toCenter = el => grid.offsetLeft + grid.clientWidth / 2 - (el.offsetLeft + el.offsetWidth / 2);
-    gsap.timeline({ scrollTrigger: { trigger: ".certs", start: "top 104px", end: "+=900", pin: true, scrub: 1, invalidateOnRefresh: true } })
-      .fromTo(certs, { x: i => toCenter(certs[i]), y: i => i * -10 + 40, rotate: i => [-9, 5, -3, 8, -6][i], scale: 0.85 },
-        { x: 0, y: 0, rotate: 0, scale: 1, stagger: 0.12, ease: "power2.inOut" })
+    const toMiddle = el => grid.offsetTop + grid.clientHeight / 2 - (el.offsetTop + el.offsetHeight / 2);
+    const tilt = [-9, 5, -3, 8, -6, 4, -7, 2];
+    gsap.timeline({ scrollTrigger: { trigger: ".certs", start: "top 104px", end: "+=1100", pin: true, scrub: 1, invalidateOnRefresh: true } })
+      .fromTo(certs, { x: i => toCenter(certs[i]), y: i => toMiddle(certs[i]) + i * -10 + 40, rotate: i => tilt[i % tilt.length], scale: 0.85 },
+        { x: 0, y: 0, rotate: 0, scale: 1, stagger: 0.1, ease: "power2.inOut" })
       .from(".cert-n, .cert-t, .ok", { opacity: 0, y: 12, stagger: 0.03 }, ">-0.2");
   } else {
     certs.forEach(el => gsap.from(el, { y: 60, opacity: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
