@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Caveat:wght@600&family=Fraunces:opsz,wght@9..144,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap">
-<script>if(location.hash&&location.hash!=="#top")document.documentElement.classList.add("skip-intro")</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -47,34 +46,10 @@
   <div class="progress-bar"></div>
 </header>
 
-<!-- 1. Hello: pinned and scrubbed by scroll -->
-<section class="hero" id="top">
-  <div class="stage">
-    <div class="bg bg-hello"></div>
-    <div class="bg bg-bonjour"></div>
-    <div class="bg bg-hola"></div>
-    <div class="bg bg-ciao"></div>
-    <div class="bg bg-kumusta"></div>
-    <div class="grain"></div>
-    <svg class="hello-svg" viewBox="0 0 1000 400" aria-hidden="true">
-      <defs>
-        <linearGradient id="ink" x1="0" x2="1"><stop offset="0" stop-color="#e0803a"/><stop offset="1" stop-color="#f2c14e"/></linearGradient>
-        <clipPath id="write"><rect id="pen" x="0" y="0" width="0" height="400"/></clipPath>
-      </defs>
-      <text id="hello" x="500" y="270" text-anchor="middle" clip-path="url(#write)">hello</text>
-    </svg>
-    <div class="greet g-serif">bonjour</div>
-    <div class="greet g-poster">hola</div>
-    <div class="greet g-grotesk">ciao</div>
-    <div class="greet g-mono">kumusta</div>
-    <div class="scroll-hint"><span></span></div>
-  </div>
-</section>
-
 <main class="wrap">
 
   <!-- 2. Wordmark -->
-  <section class="mark-sec">
+  <section class="mark-sec" id="top">
     <h1 class="wordmark" data-scramble>Charles Gideon T<span class="dot">.</span> Pasok</h1>
     <div class="grid2">
       <div class="cell">

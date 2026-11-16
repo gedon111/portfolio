@@ -36,17 +36,12 @@ document.querySelectorAll("[data-scramble]").forEach(el => {
   const target = el.closest("a") || el;
   target.addEventListener("mouseenter", () => scramble(el, 450));
 });
-// Header stays hidden over the hello hero, then drops in (and decodes) once the wordmark arrives
-// (created after the hero pin so its start accounts for the pinned scroll distance)
+// Header is there from the start; its labels decode once the fonts are in
 const header = document.querySelector(".header");
-const watchHeader = () => ScrollTrigger.create({
-  trigger: ".mark-sec", start: "top 70%",
-  onEnter: () => {
-    header.classList.add("show");
-    header.querySelectorAll("[data-scramble]").forEach((el, i) => setTimeout(() => scramble(el, 600), 150 + i * 80));
-  },
-  onLeaveBack: () => header.classList.remove("show")
-});
+const showHeader = () => {
+  header.classList.add("show");
+  header.querySelectorAll("[data-scramble]").forEach((el, i) => setTimeout(() => scramble(el, 600), 150 + i * 80));
+};
 
 
 // ---------- Photo slots stay hidden until the photo file actually exists ----------
@@ -74,39 +69,8 @@ document.querySelectorAll(".photo-slot").forEach(slot => {
 })();
 
 document.fonts.ready.then(() => {
-  if (reduce) {
-    gsap.set("#hello", { fillOpacity: 1 });
-    gsap.set("#pen", { attr: { width: 1000 } });
-    watchHeader();
-    return;
-  }
-
-  const skip = document.documentElement.classList.contains("skip-intro");
-  if (!skip) {
-    // Hello: a pen sweeps left to right revealing the outline, then the ink fills in
-    gsap.timeline({ delay: 0.3 })
-      .to("#pen", { attr: { width: 1000 }, duration: 2.4, ease: "power2.inOut" })
-      .to("#hello", { fillOpacity: 1, duration: 0.8, ease: "power1.out" }, "-=0.8");
-
-    // Then scroll takes over: pinned hero cycles greetings, each with its own backdrop
-    const greets = gsap.utils.toArray(".greet");
-    const bgs = gsap.utils.toArray(".bg");
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: ".hero", start: "top top", end: "+=3000", pin: true, scrub: 1 }
-    });
-    tl.to(".scroll-hint", { opacity: 0, duration: 0.3 })
-      .to(".hello-svg", { scale: 0.85, opacity: 0, filter: "blur(12px)", duration: 1 }, 0);
-    greets.forEach((g, i) => {
-      tl.fromTo(g, { opacity: 0, y: 60, filter: "blur(10px)" },
-                   { opacity: 1, y: 0, filter: "blur(0px)", duration: 1 }, i === 0 ? 0.6 : ">-0.2")
-        .fromTo(bgs[i + 1], { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1.4 }, "<")
-        .to(bgs[i], { opacity: 0, duration: 1 }, "<")
-        .to(g, { opacity: 0, y: -60, filter: "blur(10px)", duration: 1 }, ">-0.2");
-    });
-    tl.to({}, { duration: 0.6 });
-  }
-  if (skip) header.classList.add("show");
-  watchHeader();
+  showHeader();
+  if (reduce) return;
 
   // Reading progress line under the nav
   gsap.to(".progress-bar", { scaleX: 1, ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 0.3 } });

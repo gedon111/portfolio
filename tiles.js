@@ -1,4 +1,6 @@
 const reduceTiles = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// same query as the grid in styles.css: only landscape screens with a mouse get the grid
+const gridMQ = matchMedia("(orientation:landscape) and (min-width:1100px) and (hover:hover) and (pointer:fine)");
 // ---------- Tile trail + ambient tiles in the page margins ----------
 (() => {
   const cv = document.getElementById("tiles"), ctx = cv.getContext("2d");
@@ -12,13 +14,13 @@ const reduceTiles = matchMedia("(prefers-reduced-motion: reduce)").matches;
   };
   size(); addEventListener("resize", size);
   // symbols come in a fixed order (like typing code), colours cycle the same way
-  const SEQ = "</>{}=;()[]", PAL = ["#e0803a", "#f2c14e", "#9fd8c4", "#b7a6e8", "#f4a7b9", "#dbe8e3"];
+  const SEQ = "</>{}=;()[]&#*+$%@!?~", PAL = ["#e0803a", "#f2c14e", "#9fd8c4", "#b7a6e8", "#f4a7b9", "#dbe8e3"];
   let n = 0;
-  const add = (cx, cy, life = LIFE) => { tiles.push({ cx, cy, born: performance.now(), life, c: PAL[n % PAL.length], g: SEQ[n % SEQ.length] }); n++; };
+  const add = (cx, cy, life = LIFE) => { tiles.push({ cx, cy, born: performance.now(), life, c: PAL[n % PAL.length], g: n % SEQ.length }); n++; };
   // snap to a page-anchored grid so tiles stay put while the page scrolls under them
   const inMargin = x => { const r = wrap.getBoundingClientRect(); return x < r.left || x > r.right; };
   addEventListener("pointermove", e => {
-    if (reduceTiles || !inMargin(e.clientX)) return;
+    if (reduceTiles || !gridMQ.matches || !inMargin(e.clientX)) return;
     const cx = Math.floor(e.clientX / CELL), cy = Math.floor((e.clientY + scrollY) / CELL), key = cx + "," + cy;
     if (key === last) return;
     // fill the cells between the last one and this one, so fast moves still leave a stepped trail
@@ -32,6 +34,17 @@ const reduceTiles = matchMedia("(prefers-reduced-motion: reduce)").matches;
     last = key;
   });
   addEventListener("pointerleave", () => { last = ""; });
+  // ambient: every so often a random margin cell lights up on its own, so the grid feels alive
+  // even when the pointer is over the content
+  setInterval(() => {
+    if (reduceTiles || !gridMQ.matches || document.hidden) return;
+    const r = wrap.getBoundingClientRect(), cols = Math.floor(r.left / CELL);
+    if (cols < 2) return;
+    const left = Math.random() < .5, c = left ? 1 + Math.floor(Math.random() * (cols - 1))
+      : Math.ceil(r.right / CELL) + Math.floor(Math.random() * (cols - 1));
+    const row = Math.floor((scrollY + 110 + Math.random() * (innerHeight - 130)) / CELL);
+    add(c, row, 1600 + Math.random() * 900);
+  }, 420);
   const R = 2; // grid cells revealed around each tile
   const draw = now => {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
@@ -40,7 +53,7 @@ const reduceTiles = matchMedia("(prefers-reduced-motion: reduce)").matches;
     // each cell keeps the strongest reveal so overlapping patches don't darken
     const cells = new Map();
     for (const t of tiles) {
-      const age = now - t.born, k = age / t.life;
+      const age = Math.max(0, now - t.born), k = age / t.life;
       const a = k < 0.6 ? Math.min(1, age / 150) : 1 - (k - 0.6) / 0.4;
       for (let dx = -R; dx <= R; dx++) for (let dy = -R; dy <= R; dy++) {
         const d = Math.hypot(dx, dy);
@@ -64,7 +77,7 @@ const reduceTiles = matchMedia("(prefers-reduced-motion: reduce)").matches;
     }
     ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.font = "600 9px 'JetBrains Mono', monospace";
     for (const t of tiles) {
-      const age = now - t.born, k = age / t.life;
+      const age = Math.max(0, now - t.born), k = age / t.life;
       const x = t.cx * CELL, y = t.cy * CELL - scrollY;
       if (y < -CELL || y > innerHeight) continue;
       // pop: overshoot to ~1.25x in 260ms and settle, then shrink slightly as it fades
@@ -73,13 +86,15 @@ const reduceTiles = matchMedia("(prefers-reduced-motion: reduce)").matches;
       const s = p < 1 ? back : 1 - Math.max(0, k - 0.6) * 0.5;
       const a = k < 0.6 ? 1 : 1 - (k - 0.6) / 0.4;
       // inset like a key in its slot, so the grid line stays visible around it
-      const cx = x + CELL / 2, cy = y + CELL / 2, h = (CELL - 6) * s / 2;
+      const cx = x + CELL / 2, cy = y + CELL / 2, h = Math.max(0, (CELL - 6) * s / 2);
       ctx.globalAlpha = a;
-      ctx.beginPath(); ctx.roundRect(cx - h, cy - h, h * 2, h * 2, 3 * s);
+      ctx.beginPath(); ctx.roundRect(cx - h, cy - h, h * 2, h * 2, Math.max(0, 3 * s));
       ctx.fillStyle = t.c; ctx.fill();
       ctx.strokeStyle = "rgba(28,25,23,.28)"; ctx.lineWidth = 1; ctx.stroke();
       ctx.save(); ctx.translate(cx, cy + 1); ctx.scale(s, s);
-      ctx.fillStyle = "#1c1917"; ctx.fillText(t.g, 0, 0);
+      // symbol types itself: flickers through a few characters, then settles on its own
+      const flick = age < 360 ? Math.floor(age / 60) : 6;
+      ctx.fillStyle = "#1c1917"; ctx.fillText(SEQ[(t.g + flick * 7) % SEQ.length], 0, 0);
       ctx.restore();
     }
     ctx.globalAlpha = 1;
