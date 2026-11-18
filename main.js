@@ -1,7 +1,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
-// ---------- Intro loader: holds the page 5s while images and fonts preload ----------
-const LOADER_MS = 5000;
+// ---------- Intro loader: holds the page 2.5s while images and fonts preload ----------
+const LOADER_MS = 2500;
 const loaderEl = document.getElementById("loader");
 const loaderBar = loaderEl.querySelector(".loader-bar i");
 const loaderPct = document.getElementById("loader-pct");
@@ -172,8 +172,8 @@ document.fonts.ready.then(() => {
     scrollTrigger: { trigger: ".paper-art", start: "top 70%" } });
   gsap.from(".tags li", { y: 30, scale: 0.5, opacity: 0, stagger: 0.07, ease: "back.out(2.5)", duration: 0.6,
     scrollTrigger: { trigger: ".tags", start: "top 92%" } });
-  gsap.from(".hw-title, .paper-title", { yPercent: 40, opacity: 0, duration: 1, ease: "power4.out", stagger: 0.2,
-    scrollTrigger: { trigger: ".hw-title", start: "top 90%" } });
+  gsap.from(".paper-title", { yPercent: 40, opacity: 0, duration: 1, ease: "power4.out", stagger: 0.2,
+    scrollTrigger: { trigger: ".paper-title", start: "top 90%" } });
 
   // Tool rows: endless full-width marquee, opposite directions, pushed by scroll speed
   if (!reduce) document.querySelectorAll(".river-tools .row").forEach((row, n) => {
@@ -205,9 +205,6 @@ document.fonts.ready.then(() => {
     y: 40, opacity: 0.4,
     scrollTrigger: { trigger: c, containerAnimation: slide, start: "left 95%", end: "left 60%", scrub: true }
   }));
-
-  gsap.fromTo(".hw .shot", { y: 40, rotate: -2 }, { y: -40, rotate: 1, ease: "none",
-    scrollTrigger: { trigger: ".hw", start: "top bottom", end: "bottom top", scrub: true } });
 
   // Certificates: pinned; they start as a messy pile in the middle and deal out into the grid
   const certs = gsap.utils.toArray(".cert");

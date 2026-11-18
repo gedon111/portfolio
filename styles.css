@@ -109,7 +109,6 @@ img{display:block}
 /* river rows */
 .media{display:grid;gap:16px;align-content:center;background:var(--canvas)}
 .shot{width:100%;border:1px solid var(--rule)}
-.hw-title{font:400 italic clamp(56px,8vw,112px)/1 var(--editorial);margin:24px 0 16px}
 .badge{display:inline-flex;align-items:center;gap:8px;font:600 15px/1 var(--grotesk);padding:9px 14px;border-radius:4px;background:var(--spark);color:var(--ink)}
 .badge .ic{width:16px;height:16px}
 a.badge{text-decoration:none;transition:background .2s}
