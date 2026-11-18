@@ -1,5 +1,56 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// ---------- Intro loader: holds the page 5s while images and fonts preload ----------
+const LOADER_MS = 5000;
+const loaderEl = document.getElementById("loader");
+const loaderBar = loaderEl.querySelector(".loader-bar i");
+const loaderPct = document.getElementById("loader-pct");
+history.scrollRestoration = "manual";
+scrollTo(0, 0);
+const loaderStart = performance.now();
+const lcv = document.getElementById("loader-cv"), lctx = lcv.getContext("2d");
+const CELL = 14;
+let lw = 0, lh = 0;
+const lsize = () => { lw = lcv.width = innerWidth; lh = lcv.height = innerHeight; };
+lsize(); addEventListener("resize", lsize);
+// two inks, each with its own "heat" centre and a few px of misregistration
+const INKS = [
+  { col: "#e0803a", cx: .38, cy: .46, ox: 0, oy: 0, dx: 0, dy: 0 },
+  { col: "#f2c14e", cx: .66, cy: .58, ox: 7, oy: 7, dx: 3, dy: 2 }
+];
+const ease = t => t * t * (3 - 2 * t);
+const drawLoader = p => {
+  lctx.clearRect(0, 0, lw, lh);
+  const diag = Math.hypot(lw, lh), maxR = CELL * .56;
+  for (const ink of INKS) {
+    lctx.fillStyle = ink.col;
+    lctx.beginPath();
+    const cx = ink.cx * lw, cy = ink.cy * lh;
+    for (let y = ink.oy; y < lh + CELL; y += CELL) for (let x = ink.ox; x < lw + CELL; x += CELL) {
+      const f = 1 - Math.hypot(x - cx, y - cy) / (diag * .62);        // 1 at the hot core, falls away
+      const r = maxR * Math.max(0, Math.min(1, (ease(p) * 1.15 - (1 - f)) * 1.8));
+      if (r < .6) continue;
+      lctx.moveTo(x + ink.dx + r, y + ink.dy);
+      lctx.arc(x + ink.dx, y + ink.dy, r, 0, 6.2832);
+    }
+    lctx.fill();
+  }
+};
+const loaderTick = now => {
+  const p = Math.min(1, (now - loaderStart) / LOADER_MS);
+  loaderBar.style.transform = `scaleX(${p})`;
+  loaderPct.textContent = Math.round(p * 100) + "%";
+  drawLoader(p);
+  if (p < 1) requestAnimationFrame(loaderTick);
+};
+requestAnimationFrame(loaderTick);
+const imagesReady = Promise.all([...document.images].map(img => {
+  img.loading = "eager";
+  return (img.complete ? Promise.resolve() : new Promise(r => { img.onload = img.onerror = r; }))
+    .then(() => img.decode ? img.decode().catch(() => {}) : 0);
+}));
+const loaderDone = Promise.all([new Promise(r => setTimeout(r, LOADER_MS)), imagesReady, document.fonts.ready]);
+
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const GLYPHS = "&=+*#%$@<>/\\{}[]()?!~^;:";
 const COLORS = ["#e0803a", "#f2c14e", "#2f5d50", "#dbe8e3", "#f4a7b9", "#b7a6e8", "#9fd8c4"];
@@ -68,8 +119,14 @@ document.querySelectorAll(".photo-slot").forEach(slot => {
   g.innerHTML = s;
 })();
 
-document.fonts.ready.then(() => {
+const revealSite = () => {
+  loaderEl.classList.add("done");
+  document.body.classList.remove("loading");
+  ScrollTrigger.refresh();
   showHeader();
+};
+document.fonts.ready.then(() => {
+  loaderDone.then(revealSite);
   if (reduce) return;
 
   // Reading progress line under the nav

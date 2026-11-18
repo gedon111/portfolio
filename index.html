@@ -10,7 +10,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Caveat:wght@600&family=Fraunces:opsz,wght@9..144,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="loading">
+
+<!-- Intro loader: halftone "print run", two misregistered spot inks, 5s -->
+<div class="loader" id="loader" role="status" aria-live="polite" aria-label="Loading">
+  <canvas class="loader-cv" id="loader-cv" aria-hidden="true"></canvas>
+  <div class="loader-card">
+    <span class="loader-eye">Press run &middot; 2 inks</span>
+    <b class="loader-pct" id="loader-pct">0%</b>
+    <span class="loader-name">Charles Gideon T. Pasok</span>
+    <div class="loader-bar"><i></i></div>
+  </div>
+</div>
 
 <!-- Inline UI icons, reused with <use> -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">

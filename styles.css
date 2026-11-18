@@ -202,3 +202,16 @@ a.badge:hover{background:var(--accent)}
 
 html{overflow-x:clip}
 body{overflow-x:clip}
+
+/* ---------- intro loader: halftone print run ---------- */
+body.loading{overflow:hidden}
+.loader{position:fixed;inset:0;z-index:1000;background:#efeadd;display:grid;place-items:center;transition:opacity .7s ease,visibility .7s}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-cv{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:multiply}
+.loader-card{position:relative;display:grid;gap:10px;justify-items:start;min-width:min(340px,78vw);padding:20px 24px 22px;background:#fff;color:#1a1a1f;border:2px solid #1a1a1f;border-radius:2px;box-shadow:6px 6px 0 #1a1a1f;transform:rotate(-1.5deg)}
+.loader-eye{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.loader-pct{font:800 clamp(72px,12vw,128px)/.85 var(--poster);letter-spacing:-.03em;color:var(--accent);text-shadow:4px 4px 0 #1a1a1f;font-variant-numeric:tabular-nums}
+.loader-name{font:italic 400 clamp(22px,3vw,30px)/1.1 var(--editorial)}
+.loader-bar{justify-self:stretch;height:8px;border:2px solid #1a1a1f;background:#fff}
+.loader-bar i{display:block;height:100%;background:var(--spark);transform:scaleX(0);transform-origin:0 50%}
+@media (prefers-reduced-motion:reduce){.loader{transition:none}}
