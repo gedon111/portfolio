@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Car Corner Rentals</title>
+<meta name="description" content="Car Corner rents city cars, SUVs, EVs, sports cars and campers from four branches, with a drawn route for every trip.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..750&family=JetBrains+Mono:wght@500..700&display=swap">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1100&q=72"
+      imagesrcset="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=640&q=72 640w, https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1100&q=72 1100w"
+      imagesizes="(max-width: 900px) 100vw, 560px">
+<style>
+/* =====================================================================
+   Theme: "Contour lines" from the Anti-Flat Background Systems.
+   Layer stack: base colour → canvas isolines (height field, marching
+   squares, every 5th line an index contour) → fine grain → content.
+   Two bases (deep sea teal + foam ink) and ONE accent (road-sign amber),
+   used only on the primary Reserve action and the active route line.
+   ===================================================================== */
+:root{
+  --sea:#0b5a55; --deep:#073f3c; --shelf:#1f8f84; --foam:#a2e8d4; --line:#d9fff3; --rock:#5f6b6b; --rock-deep:#3b4444;
+  --ink:#eafff8; --ink-2:#cfeee6; --btn-ink:#0b4a46;
+  --accent:#ffb547; --accent-ink:#2a1700;
+  --panel:rgba(255,255,255,.14); --panel-line:rgba(255,255,255,.25); --panel-blur:10px;
+  --r:12px; --pad:6px; --r-in:calc(var(--r) - var(--pad));          /* inner = outer − padding */
+  --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+  --ease-out:cubic-bezier(.22,1,.36,1); --ease-io:cubic-bezier(.65,0,.35,1);
+  --dur-menu:200ms; --stagger:30ms; --tx-opacity:1;
+  --n-fine:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html{color-scheme:dark;scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--deep);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:650;letter-spacing:-.035em;text-wrap:balance;line-height:1.02}
+p{margin:0;text-wrap:pretty}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:0}
+.ico{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* ---------- terrain: the page-wide contour map ---------- */
+.terrain{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(160deg,var(--sea),var(--deep) 70%);isolation:isolate}
+.terrain canvas{position:absolute;inset:0;width:100%;height:100%;opacity:var(--tx-opacity)}
+.terrain::after{content:"";position:absolute;inset:0;background:var(--n-fine) 0 0/180px;mix-blend-mode:soft-light;opacity:calc(.35 * var(--tx-opacity))}
+
+/* ---------- frosted panel (the only surface) ---------- */
+.panel{background:var(--panel);border:1px solid var(--panel-line);border-radius:var(--r);
+  -webkit-backdrop-filter:blur(var(--panel-blur));backdrop-filter:blur(var(--panel-blur))}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .panel{background:rgba(9,70,66,.95)}
+}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;
+  font-weight:600;font-size:14.5px;text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:transform 150ms var(--ease-out),background-color 200ms var(--ease-out)}
+.btn:active{transform:scale(.97)}
+.btn-white{background:#fff;color:var(--btn-ink)}
+.btn-white:hover{background:var(--foam)}
+.btn-accent{background:var(--accent);color:var(--accent-ink)}
+.btn-accent:hover{background:#ffc56e}
+.btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--panel-line)}
+.btn-line:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.link{display:inline-flex;align-items:center;gap:6px;min-height:44px;background:none;border:0;padding:0;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink);text-decoration:underline;text-decoration-color:rgba(234,255,248,.4);text-underline-offset:4px}
+.link:hover{text-decoration-color:var(--ink)}
+
+/* ---------- header ---------- */
+header.top{position:sticky;top:0;z-index:30;background:rgba(7,63,60,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.1)}
+header.top .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:17px;letter-spacing:-.03em}
+.brand svg{width:30px;height:30px}
+nav.main{display:flex;gap:4px;margin-left:auto}
+nav.main a{text-decoration:none;font-size:14px;font-weight:500;color:var(--ink-2);padding:10px 12px;border-radius:8px}
+nav.main a:hover{color:var(--ink);background:rgba(255,255,255,.08)}
+.menu-btn{display:none;margin-left:auto;width:44px;height:44px;border-radius:10px;border:1px solid var(--panel-line);background:transparent;cursor:pointer;place-items:center}
+.menu{position:absolute;right:16px;top:58px;min-width:220px;padding:6px;display:grid;gap:2px;
+  background:rgba(7,63,60,.96);border:1px solid var(--panel-line);border-radius:var(--r);
+  transform-origin:top right;transform:scale(.95);opacity:0;pointer-events:none;
+  transition:transform calc(var(--dur-menu)*.8) var(--ease-out),opacity calc(var(--dur-menu)*.8) var(--ease-out)}
+.menu.open{transform:scale(1);opacity:1;pointer-events:auto;transition-duration:var(--dur-menu)}
+.menu a{padding:12px 12px;border-radius:var(--r-in);text-decoration:none;font-weight:500}
+.menu a:hover{background:rgba(255,255,255,.1)}
+@media(max-width:860px){nav.main,.top .btn{display:none}.menu-btn{display:grid}}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:40px;align-items:center}
+.hero h1{font-size:clamp(40px,6.4vw,76px)}
+.hero .lead{font-size:17px;color:var(--ink-2);max-width:44ch;margin-top:18px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--foam);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.eyebrow .pin{position:static}
+.field{padding:var(--pad);position:relative}
+.photo{position:relative;overflow:hidden;border-radius:var(--r-in);background:#0e4f4b}
+.photo::before{content:"";position:absolute;inset:-10%;background:var(--lq) center/cover;filter:blur(14px) saturate(1.1);transform:scale(1.05)}
+.photo img{position:relative;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 500ms var(--ease-out)}
+.photo img.in{opacity:1}
+.hero .photo{aspect-ratio:4/5}
+.hero .photo img{object-position:50% 60%}
+.caption{position:absolute;left:0;right:0;bottom:0;padding:48px 16px 14px;display:flex;justify-content:space-between;align-items:end;gap:12px;
+  background:linear-gradient(transparent,rgba(4,30,28,.82));font-size:13px}
+.caption b{display:block;font-size:15px}
+.caption .num{font-size:12px;color:var(--ink-2);text-align:right}
+
+/* booking widget */
+.book{margin-top:28px;padding:18px;display:grid;gap:14px}
+.book .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.book label{display:grid;gap:6px;font-size:12px;font-weight:600;color:var(--ink-2)}
+.book .full{grid-column:1/-1}
+.ctl{min-height:44px;width:100%;padding:0 12px;border-radius:var(--r-in);border:1px solid var(--panel-line);background:rgba(4,40,38,.55);font-size:14.5px;font-weight:500}
+.ctl:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23cfeee6' stroke-width='1.75' stroke-linecap='round'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+select.ctl option{background:#073f3c}
+input[type=date].ctl::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.75)}
+.quote{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px;border-top:1px solid rgba(255,255,255,.14)}
+.quote .sum{display:grid;gap:2px;min-width:170px}
+.quote .tot{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:26px;font-weight:700;letter-spacing:-.02em}
+.quote .tot small{font-size:13px;font-weight:500;color:var(--ink-2)}
+.quote .br{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2)}
+.quote .err{font-size:13px;color:#ffd7d0}
+.sk{display:block;height:12px;border-radius:4px;background:linear-gradient(90deg,rgba(255,255,255,.1),rgba(255,255,255,.24),rgba(255,255,255,.1)) 0 0/200% 100%;animation:sk 1s linear infinite}
+.sk.big{height:28px;width:140px;margin-bottom:6px}.sk.sm{width:180px}
+@keyframes sk{to{background-position:-200% 0}}
+.held{font-size:13.5px;padding:10px 12px;border-radius:var(--r-in);background:rgba(4,40,38,.6);border:1px solid var(--panel-line)}
+.held.pulse{animation:pulse 600ms var(--ease-out)}
+@keyframes pulse{0%{transform:scale(1)}40%{transform:scale(1.02)}100%{transform:scale(1)}}
+
+/* ---------- sections ---------- */
+section.block{padding:72px 0}
+.head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.head h2{font-size:clamp(30px,4.4vw,48px);max-width:18ch}
+.head p{color:var(--ink-2);max-width:46ch}
+.intro{padding:16px 18px;max-width:52ch}
+
+/* fleet */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--panel-line);background:rgba(4,40,38,.45);font-weight:600;font-size:13.5px;cursor:pointer;transition:background-color 150ms var(--ease-out),color 150ms var(--ease-out)}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:#fff;color:var(--btn-ink);border-color:#fff}
+.chip .num{font-size:11.5px;opacity:.7;margin-left:4px}
+.fleet{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:16px}
+.car{padding:var(--pad);display:grid;grid-template-rows:auto 1fr;opacity:0;transform:translateY(8px)}
+.car.show{opacity:1;transform:none;transition:opacity 220ms var(--ease-out),transform 220ms var(--ease-out);transition-delay:calc(var(--i) * var(--stagger))}
+.car[hidden]{display:none}
+.car .photo{aspect-ratio:3/2}
+.car .body{padding:14px 10px 8px;display:grid;gap:10px;align-content:start}
+.car .cls{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--foam)}
+.car h3{font-size:20px;letter-spacing:-.025em;line-height:1.15}
+.car h3 small{display:block;font-size:13px;font-weight:450;letter-spacing:0;color:var(--ink-2);margin-top:2px}
+.specs{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink-2)}
+.specs span{display:inline-flex;align-items:center;gap:6px}
+.specs .ico{width:16px;height:16px}
+.car .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:4px;padding-top:10px;border-top:1px solid rgba(255,255,255,.12)}
+.price{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:22px;font-weight:700;letter-spacing:-.02em}
+.price small{font-size:12px;font-weight:500;color:var(--ink-2)}
+
+/* routes */
+.routes{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:20px;align-items:start}
+.rlist{display:grid;gap:10px}
+.route{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;padding:var(--pad);border-radius:var(--r);
+  background:var(--panel);border:1px solid var(--panel-line);-webkit-backdrop-filter:blur(var(--panel-blur));backdrop-filter:blur(var(--panel-blur));transition:border-color 200ms var(--ease-out),background-color 200ms var(--ease-out)}
+.route:hover{border-color:rgba(255,255,255,.5)}
+.route:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.route[aria-pressed="true"]{border-color:var(--accent);background:rgba(255,255,255,.18)}
+.route .photo{aspect-ratio:1;height:96px}
+.route b{font-size:17px;letter-spacing:-.02em;display:block}
+.route .meta,.route .car-s{display:block}
+.route .meta{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink-2);margin-top:4px}
+.route .car-s{font-size:13px;color:var(--ink-2);margin-top:6px}
+.map{padding:var(--pad);position:relative}
+.map .stage{position:relative;aspect-ratio:3/2;border-radius:var(--r-in);overflow:hidden;background:var(--sea)}
+.map canvas,.map svg{position:absolute;inset:0;width:100%;height:100%}
+.rt{fill:none;stroke:rgba(255,255,255,.75);stroke-width:2;stroke-dasharray:5 6;stroke-linecap:round;transition:stroke 200ms var(--ease-out),opacity 200ms}
+.rt.dim{opacity:.8}
+.rt-on{fill:none;stroke:var(--accent);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.rt-on.draw{animation:draw 900ms var(--ease-out) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.pinp{fill:#fff;stroke:#062f2c;stroke-width:2}
+.plabel{font:600 11px var(--sans);fill:#fff;paint-order:stroke;stroke:rgba(4,40,38,.85);stroke-width:4px;stroke-linejoin:round}
+.mlabel{font:600 10.5px var(--mono);fill:var(--accent);paint-order:stroke;stroke:rgba(4,40,38,.9);stroke-width:4px}
+.legend{position:absolute;left:calc(var(--pad) + 12px);bottom:calc(var(--pad) + 12px);padding:10px 12px;font-size:12.5px;max-width:calc(100% - 48px)}
+.legend .num{font-size:12px}
+
+/* how it works */
+.how{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.steps{display:grid;gap:30px;padding:24px}
+.step{display:grid;grid-template-columns:44px 1fr;gap:4px 16px}
+.step .n{grid-row:span 2;font-family:var(--mono);font-size:28px;font-weight:700;color:var(--foam);line-height:1}
+.step h3{font-size:20px;letter-spacing:-.02em;line-height:1.2}
+.step p{color:var(--ink-2);font-size:14.5px}
+.how .photo{aspect-ratio:5/4}
+
+/* branches */
+.branches{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:stretch}
+.blist{padding:8px 20px;display:grid}
+.br-item{display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.br-item:last-child{border-bottom:0}
+.br-item .dot{grid-row:span 2;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #062f2c}
+.br-item b{font-size:16px}
+.br-item .hrs{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--ink-2);grid-row:span 2;text-align:right}
+.br-item span.d{font-size:13px;color:var(--ink-2)}
+.branches .map .stage{aspect-ratio:auto;height:100%;min-height:340px}
+
+/* footer: rock-grey land variant */
+footer{position:relative;isolation:isolate;overflow:hidden;margin-top:40px;background:var(--rock-deep);padding:56px 0 28px;color:#eef1f0}
+footer canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+footer h4{margin:0 0 10px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#cfd6d4}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:14px}
+footer a{text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .fine{margin-top:40px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12.5px;color:#cfd6d4}
+footer .tag{color:#d8dedc;max-width:30ch;margin-top:12px;font-size:14px}
+
+@media(max-width:900px){
+  .hero .wrap,.routes,.how,.branches{grid-template-columns:1fr}
+  .hero{padding-top:32px}
+  .hero .photo{aspect-ratio:4/3}
+  .how .photo{order:-1}
+  footer .cols{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  .book .grid{grid-template-columns:1fr}
+  .route{grid-template-columns:72px 1fr}.route .photo{height:72px}
+  .quote .btn{width:100%}
+  .legend{position:static;margin:8px 0 0}
+  footer .cols{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important;transition-delay:0ms!important}
+}
+@media (prefers-contrast:more){
+  :root{--tx-opacity:0;--panel:rgba(7,63,60,1);--panel-line:rgba(255,255,255,.6);--ink-2:#eafff8}
+}
+</style>
+</head>
+<body>
+<div class="terrain" aria-hidden="true"><canvas id="terrain"></canvas></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-seat" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="6" cy="5" r="1.6"/><circle cx="12" cy="5" r="1.6"/><circle cx="18" cy="5" r="1.6"/><circle cx="6" cy="19" r="1.6"/><circle cx="12" cy="19" r="1.6"/><path d="M6 6.6v10.8M12 6.6v10.8M18 6.6V12H6"/></symbol>
+    <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M4 20V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v15M3 20h12M4 10h10M14 8l3 2v7a1.5 1.5 0 0 0 3 0V9l-3-3"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M9 11v5M15 11v5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Car Corner home">
+      <!-- mark: three contour rings meeting at a corner, with a pin at the summit -->
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="8" fill="#fff"/>
+        <g fill="none" stroke="#0b4a46" stroke-width="2.2" stroke-linecap="round">
+          <path d="M7 25V18a11 11 0 0 1 11-11h7"/>
+          <path d="M12 25v-6a6 6 0 0 1 6-6h7" opacity=".7"/>
+        </g>
+        <circle cx="21" cy="21" r="3.2" fill="#ffb547" stroke="#0b4a46" stroke-width="1.6"/>
+      </svg>
+      Car Corner
+    </a>
+    <nav class="main" aria-label="Main">
+      <a href="#fleet">Fleet</a><a href="#routes">Routes</a><a href="#how">How it works</a><a href="#branches">Branches</a>
+    </nav>
+    <a class="btn btn-white" href="#book">Get a quote</a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+    <div class="menu" id="menu" role="menu">
+      <a role="menuitem" href="#fleet">Fleet</a><a role="menuitem" href="#routes">Routes</a><a role="menuitem" href="#how">How it works</a><a role="menuitem" href="#branches">Branches</a><a role="menuitem" href="#book">Get a quote</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Car rental with the route included</p>
+        <h1>Pick up at seven. Be on the ridge by nine.</h1>
+        <p class="lead">Ten car classes at four branches. Each one comes with a road trip we've already driven. Kilometres are unlimited, and you can return the car to any branch.</p>
+
+        <form class="book panel" id="book" novalidate>
+          <div class="grid">
+            <label class="full">Pickup branch
+              <select class="ctl" id="f-branch">
+                <option value="harbour">Harbour Corner, waterfront</option>
+                <option value="north">North Corner, ring road</option>
+                <option value="airport">Airport Corner, terminal 2 (+$12)</option>
+                <option value="ridge">Ridge Corner, mountain gate</option>
+              </select>
+            </label>
+            <label>Pickup date<input class="ctl" type="date" id="f-from" required></label>
+            <label>Return date<input class="ctl" type="date" id="f-to" required></label>
+            <label class="full">Car class
+              <select class="ctl" id="f-class">
+                <option value="city">City, from $38/day</option>
+                <option value="suv" selected>SUV, from $68/day</option>
+                <option value="electric">Electric, from $84/day</option>
+                <option value="sports">Sports, from $129/day</option>
+                <option value="van">Camper van, from $135/day</option>
+              </select>
+            </label>
+          </div>
+          <div class="quote" aria-live="polite">
+            <div class="sum" id="sum"></div>
+            <button class="btn btn-accent" type="submit">Reserve</button>
+          </div>
+          <div id="held" hidden></div>
+        </form>
+      </div>
+
+      <figure class="field panel" style="margin:0">
+        <div class="photo" style="--lq:url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=40&q=40')">
+          <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1100&q=72"
+               srcset="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=640&q=72 640w, https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1100&q=72 1100w"
+               sizes="(max-width: 900px) 100vw, 560px" fetchpriority="high"
+               alt="A silver Nissan GT-R seen from behind on a winding two-lane road at sunset">
+          <figcaption class="caption">
+            <div><b>Nissan GT-R</b>Sports class, Ridge loop</div>
+            <div class="num">96 km<br>+1,240 m</div>
+          </figcaption>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= FLEET ================= -->
+  <section class="block" id="fleet">
+    <div class="wrap">
+      <div class="head">
+        <h2>Ten cars, washed and fuelled before every pickup</h2>
+        <p class="intro panel">Prices are per day and include insurance, unlimited kilometres and a second driver. The model you get is the one shown or an equivalent from the same class.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter by class" id="filters"></div>
+      <div class="fleet" id="fleet-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= ROUTES ================= -->
+  <section class="block" id="routes">
+    <div class="wrap">
+      <div class="head">
+        <h2>Three routes, drawn for the car you take</h2>
+        <p class="intro panel">Each route starts and ends at a branch. Choose one to see it on the map. You'll get the turn-by-turn file with your booking.</p>
+      </div>
+      <div class="routes">
+        <div class="rlist" id="rlist"></div>
+        <div class="map panel">
+          <div class="stage">
+            <canvas id="route-map" aria-hidden="true"></canvas>
+            <svg id="route-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="route-title">
+              <title id="route-title">Map of three driving routes between Car Corner branches</title>
+              <g id="rt-all"></g>
+              <path id="rt-on" class="rt-on" pathLength="1"/>
+              <g id="rt-pins"></g>
+            </svg>
+          </div>
+          <div class="legend panel" id="legend"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW ================= -->
+  <section class="block" id="how">
+    <div class="wrap how">
+      <div>
+        <div class="head" style="margin-bottom:10px"><h2>Keys in hand in under ten minutes</h2></div>
+        <div class="steps panel">
+          <div class="step"><span class="n">01</span><h3>Book online, pay at pickup</h3><p>Hold a car for free. You can cancel up to 24 hours before pickup, and nothing is charged until you sign.</p></div>
+          <div class="step"><span class="n">02</span><h3>Collect at a branch</h3><p>Show your licence and card at the desk. The car is parked out front with a full tank or charge.</p></div>
+          <div class="step"><span class="n">03</span><h3>Return it to any branch</h3><p>Drop it at whichever branch is nearest the end of your trip. No one-way fee between our four branches.</p></div>
+        </div>
+      </div>
+      <div class="field panel">
+        <div class="photo" style="--lq:url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=40&q=40')">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=900&q=70"
+               srcset="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=70 600w, https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=900&q=70 900w"
+               sizes="(max-width: 900px) 100vw, 560px"
+               alt="A driver's hands on the steering wheel, with city lights blurred through the windscreen">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BRANCHES ================= -->
+  <section class="block" id="branches">
+    <div class="wrap">
+      <div class="head"><h2>Four branches, one on every side of the city</h2></div>
+      <div class="branches">
+        <div class="map panel">
+          <div class="stage">
+            <canvas id="branch-map" aria-hidden="true"></canvas>
+            <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" id="branch-svg"></svg>
+          </div>
+        </div>
+        <div class="blist panel" id="blist"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <canvas id="foot-map" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="#top" aria-label="Car Corner home">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#fff"/><g fill="none" stroke="#3b4444" stroke-width="2.2" stroke-linecap="round"><path d="M7 25V18a11 11 0 0 1 11-11h7"/><path d="M12 25v-6a6 6 0 0 1 6-6h7" opacity=".7"/></g><circle cx="21" cy="21" r="3.2" fill="#ffb547" stroke="#3b4444" stroke-width="1.6"/></svg>
+          Car Corner
+        </a>
+        <p class="tag">Rental cars with a route included, from four branches around the city.</p>
+      </div>
+      <div><h4>Rent</h4><ul><li><a href="#fleet">Fleet</a></li><li><a href="#routes">Routes</a></li><li><a href="#book">Get a quote</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#how">How it works</a></li><li><a href="#branches">Branches and hours</a></li><li>Roadside: <span class="num">0800 227 267</span></li></ul></div>
+      <div><h4>Desk</h4><ul><li>Open daily</li><li class="num">06:00–23:00</li><li>Airport Corner <span class="num">24 h</span></li></ul></div>
+    </div>
+    <div class="fine"><span>Car Corner is a sample site. Prices, branches and bookings are illustrative.</span><span>Car photos: <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a> contributors</span></div>
+  </div>
+</footer>
+
+<script>
+/* ---------------- data ---------------- */
+const IMG = (id, w, q = 70) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=${q}`;
+const CLASSES = { city:'City', suv:'SUV', electric:'Electric', sports:'Sports', van:'Camper van' };
+const RATE = { city:38, suv:68, electric:84, sports:129, van:135 };
+const FLEET = [
+  { cls:'city', name:'Fiat 500', id:'1549317661-bd32c8ce0db2', seats:4, gear:'Auto', energy:'Petrol', bags:1, price:38, alt:'A pale blue Fiat 500 parked in front of an old stone building' },
+  { cls:'city', name:'Volkswagen Polo', id:'1541899481282-d53bffe3c35d', seats:5, gear:'Auto', energy:'Petrol', bags:2, price:42, alt:'A metallic blue Volkswagen Polo hatchback under a cloudy sky' },
+  { cls:'suv', name:'Honda CR-V', id:'1519641471654-76ce0107ad1b', seats:5, gear:'Auto', energy:'Hybrid', bags:4, price:68, alt:'A white Honda CR-V parked on wet ground below snow-covered hills' },
+  { cls:'suv', name:'Ford Expedition', id:'1533473359331-0135ef1b58bf', seats:7, gear:'Auto', energy:'Petrol', bags:5, price:96, alt:'A white Ford Expedition on a dirt road among red desert rocks' },
+  { cls:'suv', name:'Range Rover Sport', id:'1563720223185-11003d516935', seats:5, gear:'Auto', energy:'Diesel', bags:4, price:148, alt:'A black Range Rover Sport facing the camera in front of a dark garage' },
+  { cls:'electric', name:'Tesla Model 3', id:'1560958089-b8a1929cea89', seats:5, gear:'Auto', energy:'491 km', ev:true, bags:3, price:84, alt:'A white Tesla Model 3 parked on a hillside road with green hills and low cloud behind' },
+  { cls:'electric', name:'Tesla Model S', id:'1536700503339-1e4b06520771', seats:5, gear:'Auto', energy:'634 km', ev:true, bags:4, price:118, alt:'A black Tesla Model S driving on a tree-lined road with its headlights on' },
+  { cls:'sports', name:'Ford Mustang GT', id:'1494976388531-d1058494cdd8', seats:4, gear:'Manual', energy:'Petrol', bags:2, price:129, alt:'A dark grey Ford Mustang facing the camera in an empty car park' },
+  { cls:'sports', name:'Nissan GT-R', id:'1568605117036-5fe5e7bab0b7', seats:4, gear:'Auto', energy:'Petrol', bags:1, price:189, alt:'A silver Nissan GT-R on a winding road at sunset' },
+  { cls:'van', name:'Volkswagen camper', id:'1527786356703-4b100091cd2c', seats:4, gear:'Manual', energy:'Petrol', bags:6, price:135, note:'Pop-top roof, sleeps 4', alt:'A cream Volkswagen camper van with its roof raised, parked above the sea' },
+];
+const BRANCHES = [
+  { key:'harbour', name:'Harbour Corner', d:'Waterfront, beside the ferry terminal', hrs:'06:00–23:00', x:150, y:300 },
+  { key:'north', name:'North Corner', d:'Ring road, exit 4', hrs:'06:00–23:00', x:300, y:70 },
+  { key:'airport', name:'Airport Corner', d:'Terminal 2, level 0 car park', hrs:'24 h', x:470, y:250 },
+  { key:'ridge', name:'Ridge Corner', d:'Mountain gate, end of route 9', hrs:'07:00–20:00', x:520, y:90 },
+];
+const ROUTES = [
+  { key:'coast', name:'Coast run', km:182, gain:'+310 m', time:'3 h 10 min', car:'Volkswagen camper', id:'1527786356703-4b100091cd2c', alt:'Camper van parked above the sea',
+    d:'M150 300 C 110 250, 60 240, 70 180 S 150 110, 190 140 S 260 210, 230 260 S 190 330, 150 300', mark:[70,180] },
+  { key:'ridge', name:'Ridge loop', km:96, gain:'+1,240 m', time:'2 h 05 min', car:'Nissan GT-R', id:'1568605117036-5fe5e7bab0b7', alt:'Sports car on a winding road',
+    d:'M300 70 C 360 40, 420 60, 450 40 S 540 50, 520 90 S 470 150, 420 140 S 330 130, 300 70', mark:[450,40] },
+  { key:'valley', name:'Valley, three days', km:540, gain:'+2,860 m', time:'3 days', car:'Ford Expedition', id:'1533473359331-0135ef1b58bf', alt:'SUV on a desert road among red rocks',
+    d:'M150 300 C 220 360, 320 370, 380 330 S 470 300, 470 250 S 560 190, 520 90', mark:[380,330] },
+];
+
+/* ---------------- helpers ---------------- */
+const $ = s => document.querySelector(s);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const money = n => '$' + n.toLocaleString('en-US');
+function photo(id, alt, w, sizes, lazy = true){
+  return `<div class="photo" style="--lq:url('${IMG(id,40,40)}')"><img ${lazy?'loading="lazy"':''} src="${IMG(id,w)}" srcset="${IMG(id,Math.round(w/2))} ${Math.round(w/2)}w, ${IMG(id,w)} ${w}w" sizes="${sizes}" alt="${alt}"></div>`;
+}
+function fadeImages(root = document){
+  root.querySelectorAll('.photo img').forEach(img => {
+    const on = () => img.classList.add('in');
+    if (img.complete && img.naturalWidth) on(); else img.addEventListener('load', on, { once:true });
+  });
+}
+
+/* ---------------- contour renderer (ported from the system's FX.contour) ----------------
+   summed-sine height field → marching squares at N levels, every 5th an index contour. */
+const SEGS = {1:[[3,2]],2:[[2,1]],3:[[3,1]],4:[[0,1]],5:[[0,3],[1,2]],6:[[0,2]],7:[[0,3]],8:[[0,3]],9:[[0,2]],10:[[0,1],[2,3]],11:[[0,1]],12:[[3,1]],13:[[2,1]],14:[[3,2]]};
+function contour(c, o){
+  const dpr = Math.min(devicePixelRatio || 1, 2), r = c.getBoundingClientRect();
+  const w = Math.round(r.width), h = Math.round(r.height); if (!w || !h) return;
+  if (c.width !== w*dpr || c.height !== h*dpr){ c.width = w*dpr; c.height = h*dpr; }
+  const ctx = c.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+  if (o.bg){ const g = ctx.createLinearGradient(0,0,w,h); g.addColorStop(0,o.bg[0]); g.addColorStop(1,o.bg[1]); ctx.fillStyle = g; ctx.fillRect(0,0,w,h); }
+  // height tint: lighter shelf colour under the peaks
+  if (o.tint){ for (const [px,py,rad] of o.peaks){ const g = ctx.createRadialGradient(px*w,py*h,0,px*w,py*h,rad*Math.max(w,h)); g.addColorStop(0,o.tint); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(0,0,w,h); } }
+  const cs = o.cs || 9, cols = Math.ceil(w/cs)+1, rows = Math.ceil(h/cs)+1, s = o.seed || 0, ph = o.phase || 0;
+  const scale = o.scale || 1, ux = 3.2*scale, vy = ux*(h/w), R = Math.max(w,h)/4;   // same units on both axes, so nothing stretches
+  const F = (x,y) => {
+    const u = x/w*ux + s, v = y/h*vy + s*.7;
+    let z = Math.sin(u*2.1+Math.sin(v*2.7+ph))*.5 + Math.sin(v*3.3-u*1.2+ph*.6)*.32 + Math.sin((u+v)*2.4)*.2;
+    for (const [px,py,amp] of o.peaks) z += Math.exp(-(((x-px*w)/R)**2 + ((y-py*h)/R)**2)*1.1) * amp;   // clear, round summits
+    return z;
+  };
+  const V = new Float32Array(cols*rows);
+  for (let j=0;j<rows;j++) for (let i=0;i<cols;i++) V[j*cols+i] = F(i*cs, j*cs);
+  const levels = o.levels || 28, lo = -1, hi = 1.6, labels = [];
+  for (let k=1;k<levels;k++){
+    const L = lo + (hi-lo)*k/levels, idx = k%5 === 0;
+    ctx.beginPath(); ctx.lineWidth = idx ? 1.5 : 1; ctx.strokeStyle = idx ? o.index : o.line;
+    let best = null, bd = Infinity; const tx = o.labelAt ? o.labelAt[0]*w : 0, ty = o.labelAt ? (o.labelAt[1] + (k/levels-.5)*.5)*h : 0;
+    for (let j=0;j<rows-1;j++) for (let i=0;i<cols-1;i++){
+      const a=V[j*cols+i], b=V[j*cols+i+1], cc=V[(j+1)*cols+i+1], d=V[(j+1)*cols+i], x0=i*cs, y0=j*cs;
+      const code = (a>L?8:0)|(b>L?4:0)|(cc>L?2:0)|(d>L?1:0), sg = SEGS[code]; if (!sg) continue;
+      const E = e => e===0 ? [x0+cs*(L-a)/(b-a), y0] : e===1 ? [x0+cs, y0+cs*(L-b)/(cc-b)] : e===2 ? [x0+cs*(L-d)/(cc-d), y0+cs] : [x0, y0+cs*(L-a)/(d-a)];
+      for (const [p,q] of sg){
+        const P=E(p), Q=E(q); ctx.moveTo(P[0],P[1]); ctx.lineTo(Q[0],Q[1]);
+        if (idx && o.labelAt){ const mx=(P[0]+Q[0])/2, my=(P[1]+Q[1])/2, dd=(mx-tx)**2+(my-ty)**2; if (dd<bd){ bd=dd; best=[mx,my,Math.atan2(Q[1]-P[1],Q[0]-P[0])]; } }
+      }
+    }
+    ctx.stroke();
+    if (best && bd < (w*.12)**2) labels.push([best, k*40]);
+  }
+  // elevation labels on index contours, kept upright
+  ctx.font = '500 10px "JetBrains Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (const [[x,y,a], m] of labels){
+    let ang = a; if (ang > Math.PI/2) ang -= Math.PI; if (ang < -Math.PI/2) ang += Math.PI;
+    ctx.save(); ctx.translate(x,y); ctx.rotate(ang);
+    ctx.lineWidth = 5; ctx.strokeStyle = o.halo; ctx.strokeText(m + ' m', 0, 0);
+    ctx.fillStyle = o.index; ctx.fillText(m + ' m', 0, 0); ctx.restore();
+  }
+}
+const SEA = { line:'rgba(217,255,243,.30)', index:'rgba(255,255,255,.58)', halo:'rgba(9,74,70,.95)' };
+const MAPS = {
+  terrain: () => contour($('#terrain'), { ...SEA, peaks:[[.78,.28,.95],[.18,.82,.7],[.55,.95,.5]], tint:'rgba(31,143,132,.45)', labelAt:[.9,.5], phase:breath }),
+  route:   () => contour($('#route-map'), { ...SEA, bg:['#0b5a55','#08433f'], peaks:[[.82,.18,1],[.4,.55,.6]], tint:'rgba(31,143,132,.5)', seed:1.7, cs:7, levels:24, labelAt:[.62,.42] }),
+  branch:  () => contour($('#branch-map'), { ...SEA, bg:['#0b5a55','#08433f'], peaks:[[.86,.22,1],[.25,.7,.5]], tint:'rgba(31,143,132,.5)', seed:1.1, scale:.75, cs:7, levels:22 }),
+  foot:    () => contour($('#foot-map'), { bg:['#5f6b6b','#3b4444'], line:'rgba(255,255,255,.2)', index:'rgba(255,255,255,.38)', halo:'rgba(59,68,68,.95)', peaks:[[.85,.4,.9]], seed:5.4, levels:22 }),
+};
+let breath = 0;
+function drawAll(){ for (const k in MAPS) MAPS[k](); }
+
+/* contours "breathe": phase shifts slowly over 20 s, rebuilt at ~8 fps, paused when hidden or reduced motion */
+let last = 0, t0 = performance.now();
+function tick(now){
+  if (!reduce.matches && !document.hidden && now - last > 125){
+    breath = Math.sin((now - t0) / 20000 * Math.PI * 2) * .12; MAPS.terrain(); last = now;
+  }
+  requestAnimationFrame(tick);
+}
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(drawAll, 150); });
+
+/* ---------------- header menu (opens from the trigger) ---------------- */
+const mb = $('#menu-btn'), menu = $('#menu');
+const setMenu = open => { menu.classList.toggle('open', open); mb.setAttribute('aria-expanded', open); };
+mb.addEventListener('click', e => { e.stopPropagation(); setMenu(!menu.classList.contains('open')); });
+menu.addEventListener('click', () => setMenu(false));
+document.addEventListener('click', e => { if (!menu.contains(e.target)) setMenu(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+/* ---------------- fleet ---------------- */
+const grid = $('#fleet-grid');
+grid.innerHTML = FLEET.map(c => `
+  <article class="car panel" data-cls="${c.cls}">
+    ${photo(c.id, c.alt, 800, '(max-width: 620px) 100vw, 360px')}
+    <div class="body">
+      <span class="cls">${CLASSES[c.cls]}</span>
+      <h3>${c.name}<small>${c.note || 'or similar'}</small></h3>
+      <div class="specs">
+        <span><svg class="ico"><use href="#i-seat"/></svg><span class="num">${c.seats}</span>&nbsp;seats</span>
+        <span><svg class="ico"><use href="#i-gear"/></svg>${c.gear}</span>
+        <span><svg class="ico"><use href="#${c.ev ? 'i-bolt' : 'i-fuel'}"/></svg>${c.ev ? `<span class="num">${c.energy}</span>` : c.energy}</span>
+        <span><svg class="ico"><use href="#i-bag"/></svg><span class="num">${c.bags}</span>&nbsp;bags</span>
+      </div>
+      <div class="foot">
+        <span class="price">${money(c.price)}<small> /day</small></span>
+        <button class="link" type="button" data-pick="${c.cls}">Quote this car</button>
+      </div>
+    </div>
+  </article>`).join('');
+fadeImages(grid);
+
+const counts = FLEET.reduce((m,c) => (m[c.cls] = (m[c.cls]||0)+1, m), {});
+$('#filters').innerHTML = [['all','All', FLEET.length], ...Object.keys(CLASSES).map(k => [k, CLASSES[k], counts[k]])]
+  .map(([k,l,n], i) => `<button class="chip" type="button" data-f="${k}" aria-pressed="${i===0}">${l}<span class="num">${n}</span></button>`).join('');
+
+function showFleet(f){
+  let i = 0;
+  grid.querySelectorAll('.car').forEach(card => {
+    const on = f === 'all' || card.dataset.cls === f;
+    card.hidden = !on; card.classList.remove('show');
+    if (on) card.style.setProperty('--i', i++);
+  });
+  void grid.offsetWidth;   // commit the hidden state so the stagger replays
+  grid.querySelectorAll('.car:not([hidden])').forEach(c => c.classList.add('show'));
+}
+$('#filters').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  $('#filters').querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+  showFleet(b.dataset.f);
+});
+// first reveal when the grid scrolls into view
+new IntersectionObserver((es, ob) => { if (es[0].isIntersecting){ showFleet('all'); ob.disconnect(); } }, { rootMargin:'0px 0px -10% 0px' }).observe(grid);
+
+grid.addEventListener('click', e => {
+  const b = e.target.closest('[data-pick]'); if (!b) return;
+  $('#f-class').value = b.dataset.pick; quote();
+  $('#book').scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block:'center' });
+  setTimeout(() => $('#f-class').focus({ preventScroll:true }), reduce.matches ? 0 : 500);
+});
+
+/* ---------------- booking quote ---------------- */
+const iso = d => d.toISOString().slice(0,10);
+const today = new Date(); today.setHours(12);
+const plus = n => { const d = new Date(today); d.setDate(d.getDate()+n); return d; };
+$('#f-from').value = iso(plus(1)); $('#f-to').value = iso(plus(4)); $('#f-from').min = $('#f-to').min = iso(today);
+const sum = $('#sum'); let qt;
+function quote(){
+  clearTimeout(qt); $('#held').hidden = true;
+  sum.innerHTML = '<span class="sk big"></span><span class="sk sm"></span>';      // loading state
+  qt = setTimeout(() => {
+    const from = new Date($('#f-from').value), to = new Date($('#f-to').value);
+    const days = Math.round((to - from) / 864e5);
+    if (!$('#f-from').value || !$('#f-to').value || isNaN(days)){ sum.innerHTML = '<span class="err">Choose a pickup and return date.</span>'; return; }
+    if (days < 1){ sum.innerHTML = '<span class="err">Return date must be after pickup.</span>'; return; }
+    const cls = $('#f-class').value, rate = RATE[cls], fee = $('#f-branch').value === 'airport' ? 12 : 0, total = days*rate + fee;
+    sum.innerHTML = `<span class="tot">${money(total)} <small>total</small></span>
+      <span class="br">${days} ${days===1?'day':'days'} × ${money(rate)}${fee ? ` + ${money(fee)} airport` : ''} · unlimited km</span>`;
+    sum.dataset.total = total; sum.dataset.days = days;
+  }, 400);
+}
+['#f-branch','#f-from','#f-to','#f-class'].forEach(s => $(s).addEventListener('change', quote));
+$('#book').addEventListener('submit', e => {
+  e.preventDefault(); if (!sum.dataset.total || sum.querySelector('.err,.sk')) return;
+  const h = $('#held'), ref = 'CC-' + String(4000 + Math.floor(Math.random()*5999));
+  const br = $('#f-branch').selectedOptions[0].text.split(',')[0];
+  h.className = 'held'; h.hidden = false;
+  h.innerHTML = `Held for 15 minutes at <b>${br}</b>. Reference <span class="num"><b>${ref}</b></span>. You pay at the desk.`;
+  void h.offsetWidth; h.classList.add('pulse');
+});
+quote();
+
+/* ---------------- routes ---------------- */
+const NS = 'http://www.w3.org/2000/svg';
+$('#rt-all').innerHTML = ROUTES.map(r => `<path class="rt" data-r="${r.key}" d="${r.d}"/>`).join('');
+const pinSvg = (b, labelLeft) => `<g><circle class="pinp" cx="${b.x}" cy="${b.y}" r="6"/><text class="plabel" x="${b.x + (labelLeft ? -12 : 12)}" y="${b.y + 4}" text-anchor="${labelLeft ? 'end' : 'start'}">${b.name}</text></g>`;
+$('#rt-pins').innerHTML = BRANCHES.map(b => pinSvg(b, b.x > 400)).join('') + '<text class="mlabel" id="rt-mark"></text>';
+$('#rlist').innerHTML = ROUTES.map((r,i) => `
+  <button class="route" type="button" data-r="${r.key}" aria-pressed="${i===0}">
+    ${photo(r.id, r.alt, 240, '96px')}
+    <span><b>${r.name}</b><span class="meta">${r.km} km · ${r.gain} · ${r.time}</span><span class="car-s">Drive it in the ${r.car}</span></span>
+  </button>`).join('');
+fadeImages($('#rlist'));
+function pickRoute(key){
+  const r = ROUTES.find(x => x.key === key);
+  document.querySelectorAll('.route').forEach(b => b.setAttribute('aria-pressed', b.dataset.r === key));
+  document.querySelectorAll('.rt').forEach(p => p.classList.toggle('dim', p.dataset.r !== key));
+  const on = $('#rt-on'); on.setAttribute('d', r.d); on.classList.remove('draw'); void on.getBBox(); on.classList.add('draw');
+  const m = $('#rt-mark'); m.setAttribute('x', r.mark[0]); m.setAttribute('y', r.mark[1] - 12); m.setAttribute('text-anchor','middle'); m.textContent = r.km + ' km';
+  $('#legend').innerHTML = `<b>${r.name}</b> · <span class="num">${r.km} km, ${r.gain}</span>`;
+}
+$('#rlist').addEventListener('click', e => { const b = e.target.closest('.route'); if (b) pickRoute(b.dataset.r); });
+pickRoute('coast');
+
+/* ---------------- branches ---------------- */
+$('#branch-svg').innerHTML = BRANCHES.map(b => pinSvg(b, b.x > 400)).join('');
+$('#blist').innerHTML = BRANCHES.map(b => `<div class="br-item"><span class="dot" aria-hidden="true"></span><b>${b.name}</b><span class="hrs">${b.hrs}</span><span class="d">${b.d}</span></div>`).join('');
+
+/* ---------------- go ---------------- */
+fadeImages();
+const start = () => { drawAll(); requestAnimationFrame(tick); };
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+</script>
+</body>
+</html>
