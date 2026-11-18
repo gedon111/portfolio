@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delivery · Dahon Coffee House</title>
+<meta name="description" content="Concept mockup: delivery zones, fees and ordering for Dahon Coffee House, a fictional cafe in Baguio. Nothing is sent.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=JetBrains+Mono:wght@500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+<link rel="stylesheet" href="dahon.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ribbon">Concept mockup by Gideon · fictional business, not a real cafe · <a href="../../projects/dahon-mockup.html">See the case study</a></div>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 26C6 12 16 5 28 4c0 13-8 22-22 22Z" fill="#4f8a3c"/><path d="M6 26 22 10" stroke="#f3ecda" stroke-width="1.6" stroke-linecap="round"/></svg>Dahon<small>Coffee House</small></a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    <ul class="menu" id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="story.html">Our story</a></li>
+      <li><a href="visit.html">Visit</a></li>
+      <li><a href="delivery.html" aria-current="page">Delivery</a></li>
+      <li class="m-cta"><a href="visit.html#reserve-sec">Reserve a table</a></li>
+    </ul>
+    <a class="btn btn-leaf" href="visit.html#reserve-sec">Reserve</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="phead">
+    <div class="wrap">
+      <span class="eyebrow">Delivery · 9 AM to 8 PM, Tuesday to Sunday</span>
+      <h1>Kape, brought <em>down</em> the hill.</h1>
+      <p class="lead">We deliver around central Baguio with our own riders, so your latte doesn't sit in a queue. Iced drinks travel with the ice packed separately. <span class="hl">No melted pandan.</span></p>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:clamp(16px,3vw,32px)">
+    <div class="wrap split">
+      <figure class="map sheet torn tilt rv">
+        <iframe src="https://www.google.com/maps?q=Session+Road,+Baguio+City&amp;z=14&amp;output=embed" title="Google Map of central Baguio, our delivery area around Session Road" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <figcaption class="hand">About 5 km around Session Rd.</figcaption>
+      </figure>
+      <div class="rv">
+        <span class="kicker">Zones and fees</span>
+        <ul class="hours zones">
+          <li><span class="z">Session Rd., Burnham, Legarda<small>20 to 30 min</small></span><span>₱39</span></li>
+          <li><span class="z">Camp John Hay, Teachers' Camp, Engineers' Hill<small>30 to 40 min</small></span><span>₱59</span></li>
+          <li><span class="z">Mines View, Pacdal, Bakakeng<small>40 to 50 min</small></span><span>₱79</span></li>
+          <li><span class="z">La Trinidad (Km 4 to 6)<small>45 to 60 min</small></span><span>₱99</span></li>
+        </ul>
+        <p style="margin-top:18px;color:var(--ink-2);font-size:17px">Minimum order ₱300. <span class="hl">Free delivery over ₱800.</span> During the afternoon fog or heavy rain, give us 15 minutes more.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split">
+      <div class="rv">
+        <span class="kicker">Check your area · demo only</span>
+        <h2 style="font:500 clamp(34px,4vw,52px)/1.05 var(--serif);letter-spacing:-.02em">Do we reach <span class="hl">you</span>?</h2>
+        <p style="margin-top:16px;color:var(--ink-2);max-width:40ch">Pick your area and order total to see the fee and how long it takes. Nothing is sent.</p>
+      </div>
+      <div class="sheet torn tilt-r rv">
+        <form class="form" id="zone-check" novalidate>
+          <h2>Delivery estimate</h2>
+          <p>Based on the time right now.</p>
+          <div class="field"><label for="d-area">Your area</label>
+            <select id="d-area">
+              <option value="">Pick an area</option>
+              <optgroup label="₱39 · 20 to 30 min"><option data-fee="39" data-eta="20-30">Session Rd.</option><option data-fee="39" data-eta="20-30">Burnham Park</option><option data-fee="39" data-eta="20-30">Legarda Rd.</option></optgroup>
+              <optgroup label="₱59 · 30 to 40 min"><option data-fee="59" data-eta="30-40">Camp John Hay</option><option data-fee="59" data-eta="30-40">Teachers' Camp</option><option data-fee="59" data-eta="30-40">Engineers' Hill</option></optgroup>
+              <optgroup label="₱79 · 40 to 50 min"><option data-fee="79" data-eta="40-50">Mines View</option><option data-fee="79" data-eta="40-50">Pacdal</option><option data-fee="79" data-eta="40-50">Bakakeng</option></optgroup>
+              <optgroup label="₱99 · 45 to 60 min"><option data-fee="99" data-eta="45-60">La Trinidad</option></optgroup>
+              <option data-fee="" data-eta="">Somewhere else</option>
+            </select>
+          </div>
+          <div class="field"><label for="d-total">Order total (₱)</label><input id="d-total" type="number" min="0" step="10" inputmode="numeric" value="450"></div>
+          <output class="estimate" id="d-out" for="d-area d-total" aria-live="polite">Pick an area to see the fee.</output>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="kicker">How to order</span><h2>Three ways to get your <em>kape</em>.</h2></div><p>Same menu and same prices everywhere. The apps add their own service fee.</p></div>
+      <div class="drinks ways" data-stagger>
+        <article class="drink sheet torn">
+          <span class="num hand">1</span>
+          <h3>Text or call us</h3><p>Send your order and address to our number. We'll reply with the total and the rider's name. Pay by GCash or cash.</p>
+          <span class="price"><span>0918 000 0000</span><span>fastest</span></span>
+        </article>
+        <article class="drink sheet torn">
+          <span class="num hand">2</span>
+          <h3>Delivery apps</h3><p>Find "Dahon Coffee House" on the big food delivery apps. Handy if you're ordering from other places too.</p>
+          <span class="price"><span>In-app (demo)</span><span>+ app fee</span></span>
+        </article>
+        <article class="drink sheet torn">
+          <span class="num hand">3</span>
+          <h3>Order ahead, pick up</h3><p>Text us 15 minutes before you arrive and skip the line. Your order waits on the shelf by the green door.</p>
+          <span class="price"><span><a href="visit.html">Directions</a></span><span>no fee</span></span>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><a class="logo" href="index.html">Dahon</a><p>A small cafe with a long table, a roaster in the back, and a cat named Kape.</p></div>
+    <div><h4>Cafe</h4><ul><li><a href="menu.html">Menu</a></li><li><a href="story.html">Our story</a></li><li><a href="visit.html">Visit</a></li><li><a href="delivery.html">Delivery</a></li></ul></div>
+    <div><h4>Find us</h4><ul><li>2F Pine Row Bldg. (fictional)</li><li>Upper Session Rd., Baguio</li><li>0918 000 0000</li></ul></div>
+    <div><h4>Follow</h4><ul><li><a href="#" aria-disabled="true">Instagram</a></li><li><a href="#" aria-disabled="true">Facebook</a></li><li><a href="#" aria-disabled="true">TikTok</a></li></ul></div>
+    <div class="legal"><span>Dahon Coffee House is a fictional business. Concept mockup by Gideon. Photos from <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>, map from Google Maps.</span><a href="../../index.html#mockups">← Back to the portfolio</a></div>
+  </div>
+</footer>
+<script src="dahon.js"></script>
+</body>
+</html>

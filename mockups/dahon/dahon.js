@@ -49,3 +49,21 @@ if (form) {
     ok.classList.add("show"); ok.focus();
   });
 }
+
+// delivery estimate (demo only)
+const zc = document.getElementById("zone-check");
+if (zc) {
+  const area = zc.querySelector("#d-area"), total = zc.querySelector("#d-total"), out = zc.querySelector("#d-out");
+  const peso = n => "₱" + n.toLocaleString("en-PH");
+  const update = () => {
+    const o = area.selectedOptions[0], t = Math.max(0, +total.value || 0);
+    if (!area.value) return out.textContent = "Pick an area to see the fee.";
+    if (!o.dataset.fee) return out.innerHTML = "We don't deliver there yet. Try a delivery app, or <a href=\"visit.html\">visit us</a>.";
+    const d = new Date(), h = d.getHours() + d.getMinutes() / 60, mon = d.getDay() === 1, closed = mon || h < 9 || h >= 20;
+    if (t < 300) return out.innerHTML = `Add <b>${peso(300 - t)}</b> more to reach the ₱300 minimum.`;
+    const fee = t >= 800 ? 0 : +o.dataset.fee;
+    out.innerHTML = `${area.value}: delivery <b>${fee ? peso(fee) : "free"}</b>, about <b>${o.dataset.eta.replace("-", " to ")} min</b>. Total <b>${peso(t + fee)}</b>.` +
+      (closed ? `<br><small>We're not delivering right now. Riders are out 9 AM to 8 PM, Tuesday to Sunday.</small>` : t < 800 ? `<br><small>${peso(800 - t)} more for free delivery.</small>` : "");
+  };
+  zc.addEventListener("input", update); zc.addEventListener("submit", e => e.preventDefault());
+}
