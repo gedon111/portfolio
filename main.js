@@ -1,7 +1,10 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ---------- Intro loader: holds the page 2.5s while images and fonts preload ----------
-const LOADER_MS = 2500;
+// Full 2.5s on the first visit; a short one when coming back (e.g. from a mockup) in the same session
+let seenLoader = false;
+try { seenLoader = sessionStorage.getItem("seenLoader") === "1"; sessionStorage.setItem("seenLoader", "1"); } catch (e) {}
+const LOADER_MS = seenLoader ? 500 : 2500;
 const loaderEl = document.getElementById("loader");
 const loaderBar = loaderEl.querySelector(".loader-bar i");
 const loaderPct = document.getElementById("loader-pct");
@@ -56,10 +59,11 @@ const GLYPHS = "&=+*#%$@<>/\\{}[]()?!~^;:";
 const COLORS = ["#e0803a", "#f2c14e", "#2f5d50", "#dbe8e3", "#f4a7b9", "#b7a6e8", "#9fd8c4"];
 const pick = s => s[Math.floor(Math.random() * s.length)];
 
+
 // ---------- Clock in the top strip ----------
 const clock = document.getElementById("clock");
 const tick = () => { clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false }); };
-tick(); setInterval(tick, 1000);
+if (clock) { tick(); setInterval(tick, 1000); }
 
 // ---------- Scramble: text flickers through random symbols, then settles ----------
 function scramble(el, duration = 700) {
@@ -124,6 +128,9 @@ const revealSite = () => {
   document.body.classList.remove("loading");
   ScrollTrigger.refresh();
   showHeader();
+  // the loader holds the page at the top, so jump to #section links (like "Back to portfolio") once it's gone
+  const target = location.hash && document.querySelector(location.hash);
+  if (target) requestAnimationFrame(() => scrollTo(0, target.getBoundingClientRect().top + scrollY - 104));
 };
 document.fonts.ready.then(() => {
   loaderDone.then(revealSite);
@@ -151,8 +158,8 @@ document.fonts.ready.then(() => {
     onUpdate: s => { skew(gsap.utils.clamp(-14, 14, s.getVelocity() / -120)); clearTimeout(wm._t); wm._t = setTimeout(() => skew(0), 120); } });
   gsap.from(".mark-sec .grid2 .cell", { y: 60, opacity: 0, stagger: 0.15, duration: 0.9, ease: "power3.out",
     scrollTrigger: { trigger: ".mark-sec .grid2", start: "top 88%" } });
-  gsap.from(".intro-icons > *", { y: 30, scale: 0.4, opacity: 0, stagger: 0.08, duration: 0.6, ease: "back.out(2.5)",
-    scrollTrigger: { trigger: ".intro-icons", start: "top 90%" } });
+  gsap.from(".steps li", { y: 40, opacity: 0, stagger: 0.03, duration: 0.25, ease: "power3.out",
+    scrollTrigger: { trigger: ".steps", start: "top 85%" } });
 
   // Slash headings: decode, the slash drops in with a bounce, the hairline under them draws across
   gsap.utils.toArray(".sec-head").forEach(h => {
@@ -223,7 +230,7 @@ document.fonts.ready.then(() => {
   }
 
   // Hover physics: cards tilt toward the pointer, buttons get pulled toward it
-  document.querySelectorAll(".card, .cert").forEach(el => {
+  document.querySelectorAll(".card, .cert, .mock").forEach(el => {
     const rx = gsap.quickTo(el, "rotationX", { duration: 0.5, ease: "power3" });
     const ry = gsap.quickTo(el, "rotationY", { duration: 0.5, ease: "power3" });
     gsap.set(el, { transformPerspective: 900 });

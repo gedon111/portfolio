@@ -1,0 +1,12 @@
+/* "Back to portfolio" pill, pinned on every mockup page. Scoped names so it never clashes with a mockup's own CSS. */
+.pf-back{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:2147483000;
+  display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px 10px 12px;border-radius:999px;
+  background:#141210;color:#f5f1ea;border:1px solid rgba(255,255,255,.18);box-shadow:0 6px 20px rgba(0,0,0,.28);
+  font:500 14px/1 "Space Grotesk","Inter",system-ui,sans-serif;letter-spacing:.01em;text-decoration:none;
+  transition:transform .12s cubic-bezier(.22,1,.36,1),background .2s}
+.pf-back svg{width:18px;height:18px;flex:none}
+.pf-back b{font-weight:600;color:#e0803a}
+.pf-back:hover{background:#2f5d50}
+.pf-back:active{transform:scale(.97)}
+.pf-back:focus-visible{outline:2px solid #e0803a;outline-offset:3px}
+@media print{.pf-back{display:none}}

@@ -1,8 +1,9 @@
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+
 const clock = document.getElementById("clock");
 const tick = () => { clock.textContent = new Date().toLocaleTimeString("en-GB"); };
-tick(); setInterval(tick, 1000);
+if (clock) { tick(); setInterval(tick, 1000); }
 
 gsap.registerPlugin(ScrollTrigger);
 if (!reduce) {

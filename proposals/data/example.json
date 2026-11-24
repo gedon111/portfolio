@@ -1,0 +1,60 @@
+{
+  "slug": "example",
+  "business": "Bukid Garden Resort",
+  "owner": "Ma'am Liza",
+  "place": "San Isidro, Magalang, Pampanga",
+  "prepared": "2026-11-24",
+  "validDays": 30,
+
+  "noticed": [
+    "Searching \"Bukid Garden Resort Magalang\" on Google shows only your Facebook page, with no website.",
+    "Your Google Maps pin has no opening hours, so people asking \"open ba kayo ngayon?\" have to message you.",
+    "Your room rates are in a photo of a price list, so customers can't copy or search them."
+  ],
+
+  "sample": {
+    "url": "https://gedon111.github.io/portfolio/mockups/dahon/",
+    "note": "This sample uses a made-up cafe. Your sample page will use your own photos, rates and hours."
+  },
+
+  "plans": [
+    {
+      "name": "Site",
+      "price": 1500,
+      "includes": ["One-page website with your rates, photos, hours and map", "Hosting and the security certificate", "One round of edits a month", "A \"Message us\" button to your Facebook page"]
+    },
+    {
+      "name": "Site + Content",
+      "price": 3500,
+      "recommended": true,
+      "includes": ["Everything in Site", "8 Facebook posts a month, written and designed by me", "Replies to inquiries from 6 pm to 9 pm"]
+    },
+    {
+      "name": "Site + Content + Reports",
+      "price": 5500,
+      "includes": ["Everything in Site + Content, with 12 posts a month", "A monthly report: where your customers came from and which posts brought bookings"]
+    }
+  ],
+
+  "notIncluded": [
+    "Online payments and a booking system (quoted separately if you want one later)",
+    "Photography. I use the photos you send or already post",
+    "Paid ads on Facebook or Google"
+  ],
+
+  "terms": [
+    ["Setup", "Free, with a 3-month minimum."],
+    ["Domain", "Registered in your name, about ₱800 a year, paid by you directly. You keep it if you leave."],
+    ["Billing", "Monthly through GCash or bank transfer, on the date your site goes live."],
+    ["Cancelling", "Tell me 2 weeks before your next billing date. After the minimum, you can leave any month."],
+    ["Leaving", "You get a copy of all the files and your domain stays yours."]
+  ],
+
+  "faq": [
+    ["Why is the sample free?", "So you can judge the work before you spend anything. If you don't like it, you don't owe me anything."],
+    ["You're a student. What if you stop?", "Your domain and all files are yours, so any developer can take over. I'll give you a month's notice either way."],
+    ["Can I pay once instead of monthly?", "Yes. Ask me for a one-time price; it won't include posts or monthly edits."]
+  ],
+
+  "nextStep": "Reply \"OK\" by text or Viber and I'll start building your full site."
+}
