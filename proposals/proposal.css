@@ -77,8 +77,41 @@ details p{margin-top:8px;color:var(--muted)}
 
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;font-size:14px;color:var(--muted)}
 
+/* ---- Anti-flat backgrounds (Anti-Flat Background Systems: Paper texture + Grainy gradients) ----
+   Layer stack: base colour -> light/shape -> texture (aria-hidden, no pointer events) -> scrim -> content on solid panels.
+   One token (--tx) controls every texture so prefers-contrast can zero it. */
+:root{
+  --tx:1;
+  --n-fine:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --n-paper:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.04 .06' numOctaves='4' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='1.2'%3E%3CfeDistantLight azimuth='45' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+/* desk: warm paper colour, fibre lighting multiplied on top, aged-edge vignette */
+body{position:relative;isolation:isolate;background:#e9e1cf}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:var(--n-paper);background-size:300px;mix-blend-mode:multiply;opacity:calc(.75*var(--tx))}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(120% 100% at 50% 40%,transparent 55%,rgba(150,120,70,.32))}
+/* the sheet itself stays solid so text never sits on texture; soft layered shadow, no float */
+.doc{background:var(--surface);border-color:rgba(60,40,10,.22);box-shadow:0 1px 1px rgba(60,40,10,.22),0 10px 24px rgba(60,40,10,.14)}
+/* header: grainy gradient in the brand colour; text sits on a darkened floor */
+.top{position:relative;isolation:isolate;overflow:hidden;border-top:0;color:#f4efe4;
+  background:
+    radial-gradient(90% 140% at 100% 0%,#4d8a76 0,transparent 62%),
+    radial-gradient(70% 120% at 0% 100%,#173a30 0,transparent 70%),
+    var(--brand)}
+.top::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:var(--n-fine);background-size:200px;mix-blend-mode:overlay;opacity:calc(.5*var(--tx))}
+.top::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(to top,rgba(10,28,22,.55),transparent 70%)}
+.top .from,.top .meta dt{color:#d4e2dc}
+.top .from i{color:var(--accent)}
+.top h1,.top .meta dd{color:#fff}
+@media (prefers-contrast:more){:root{--tx:0}.doc{border-color:var(--ink)}}
+
 @media print{
   body{background:#fff;padding:0}
+  body::before,body::after,.top::before,.top::after{display:none}
+  .top{background:#fff;color:var(--ink)}.top h1,.top .meta dd{color:var(--ink)}.top .from,.top .meta dt{color:var(--muted)}
   .doc{border:0;max-width:none}
   details{display:block}details>*{display:block}summary::after{content:none}
   .contact,.sample{break-inside:avoid}

@@ -1,0 +1,30 @@
+{
+  "slug": "zz-test",
+  "business": "Zz Test Carinderia",
+  "owner": "Ma'am / Sir Name",
+  "place": "Barangay, Magalang, Pampanga",
+  "address": "",
+  "phone": "",
+  "facebook": "",
+  "mapUrl": "",
+  "type": "food",
+  "tagline": "One plain sentence about what they sell.",
+  "about": "Two sentences max, from Gid's notes. No invented history.",
+  "offers": {
+    "title": "Menu | Rates | Services",
+    "items": [
+      {
+        "name": "Item",
+        "detail": "Sample",
+        "price": "₱000"
+      }
+    ]
+  },
+  "hours": [
+    [
+      "Mon to Sun",
+      "8 am to 6 pm (sample)"
+    ]
+  ],
+  "photos": []
+}

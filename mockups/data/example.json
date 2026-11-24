@@ -1,0 +1,20 @@
+{
+  "slug": "example",
+  "business": "Bukid Garden Resort",
+  "type": "resort",
+  "place": "San Isidro, Magalang, Pampanga",
+  "tagline": "Cottages, a pool and a garden for your family day out.",
+  "about": "Sample text. Your own story goes here, in your words: how long you have been open and what people come for.",
+  "offers": {
+    "title": "Rates",
+    "items": [
+      { "name": "Day swim", "detail": "Sample rate. 8 am to 5 pm", "price": "₱100 per head" },
+      { "name": "Cottage", "detail": "Sample rate. Fits about 10 people", "price": "₱800" },
+      { "name": "Overnight room", "detail": "Sample rate. With breakfast", "price": "₱2,500" }
+    ]
+  },
+  "hours": [["Mon to Sun", "8 am to 6 pm (sample)"]],
+  "address": "San Isidro, Magalang, Pampanga (sample address)",
+  "mapUrl": "https://maps.google.com/?q=Magalang,Pampanga",
+  "phone": "0993 878 5779"
+}
