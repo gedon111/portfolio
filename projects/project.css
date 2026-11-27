@@ -88,3 +88,19 @@
 /* awards moved from the home page */
 .awards .award.flip .award-photo{order:0}
 @media (min-width:861px){.awards .award .cell+.cell{border-left:1px solid var(--rule)}}
+
+/* pumpzone: stack and run-it sections */
+.stack .grid3>.cell h3{font:500 clamp(22px,2.2vw,30px)/1.2 var(--grotesk)}
+.stack .grid3>.cell p{color:var(--muted)}
+.run .grid2{border-top:1px solid var(--rule)}
+.run-copy{display:flex;flex-direction:column;justify-content:center;gap:16px}
+.run-copy h3{font:500 clamp(24px,2.4vw,34px)/1.2 var(--grotesk)}
+.run-copy p{max-width:44ch;color:var(--muted)}
+.run code{font:500 .9em/1.4 var(--mono);color:var(--ink)}
+.cmds{list-style:none;display:flex;flex-direction:column;gap:22px;counter-reset:c}
+.cmds li{display:flex;flex-direction:column;gap:8px;min-width:0}
+.cmds span{font:600 14px/1 var(--grotesk);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cmds span::before{counter-increment:c;content:counter(c) ". ";color:var(--accent)}
+.cmds code{display:block;padding:12px 14px;background:var(--hero-bg);color:var(--hero-ink);border-radius:4px;font-size:14px;overflow-x:auto;white-space:pre}
+.cmds small{font:400 14px/1.4 var(--mono);color:var(--muted)}
+.run-steps{min-width:0}

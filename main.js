@@ -197,20 +197,10 @@ document.fonts.ready.then(() => {
     } });
   });
 
-  // Work: vertical scroll moves the cards sideways
-  const track = document.querySelector(".track");
-  const wrapW = () => document.querySelector(".wrap").clientWidth;
-  const slide = gsap.to(track, {
-    x: () => -(track.scrollWidth - wrapW()),
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".tries", start: "top 104px", end: () => "+=" + (track.scrollWidth - wrapW()),
-      pin: true, scrub: 1, invalidateOnRefresh: true
-    }
-  });
+  // Work: a plain grid; each card fades up once as it comes into view (no pinning)
   gsap.utils.toArray(".card").forEach(c => gsap.from(c, {
-    y: 40, opacity: 0.4,
-    scrollTrigger: { trigger: c, containerAnimation: slide, start: "left 95%", end: "left 60%", scrub: true }
+    y: 40, opacity: 0, duration: 0.8, ease: "power3.out",
+    scrollTrigger: { trigger: c, start: "top 90%", once: true }
   }));
 
   // Certificates: pinned; they start as a messy pile in the middle and deal out into the grid
