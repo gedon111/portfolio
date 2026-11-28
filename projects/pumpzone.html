@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>pumpzone / Gideon Pasok</title>
-<meta name="description" content="A simple front-desk prototype that tracks a gym's members, payments and check-ins in place of the paper logbook.">
+<meta name="description" content="The gym's paper logbook, turned into one screen: who's active, who's expiring and who still owes, at a glance.">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,64 +37,63 @@
 <main class="wrap pwrap">
   <section class="phero grid2">
     <div class="cell phero-copy">
-      <span class="badge"><svg class="ic"><use href="#i-flask"/></svg>Prototype · runs locally</span>
+      <span class="badge"><svg class="ic"><use href="#i-flask"/></svg>Prototype · try it free</span>
       <h1 class="slash">pumpzone<i>/</i></h1>
-      <p class="pitch">A simple front-desk prototype that tracks a gym's members, payments and check-ins in place of the paper logbook.</p>
-      <ul class="tags"><li title="Python"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="Python"></li><li title="Django"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/django/django-plain.svg" alt="Django"></li><li title="SQLite"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/sqlite/sqlite-original.svg" alt="SQLite"></li></ul>
-      <ul class="facts"><li><b>103</b><span>tests</span></li><li><b>223</b><span>fake demo members</span></li><li><b>0</b><span>build steps</span></li></ul>
-      <div class="actions"><a class="btn-primary" href="https://gedon111.github.io/pumpzone-gym-system/" target="_blank" rel="noopener"><span>Click-through demo</span><svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn-ghost" href="https://github.com/gedon111/pumpzone-gym-system" target="_blank" rel="noopener"><span>Source and run steps</span><svg class="ic"><use href="#i-github"/></svg></a></div>
+      <p class="pitch">The gym's paper logbook, turned into one screen. See who's active, who's about to expire and who still owes, at a glance.</p>
+      <ul class="facts"><li><b>1</b><span>tap to check in</span></li><li><b>3</b><span>colours, no guessing</span></li><li><b>0</b><span>notebooks</span></li></ul>
+      <div class="actions"><a class="btn-primary" href="https://gedon111.github.io/pumpzone-gym-system/" target="_blank" rel="noopener"><span>Try the live demo</span><svg class="ic"><use href="#i-arrow"/></svg></a><a class="btn-ghost" href="https://github.com/gedon111/pumpzone-gym-system" target="_blank" rel="noopener"><span>See the code</span><svg class="ic"><use href="#i-github"/></svg></a></div>
     </div>
     <figure class="cell phero-shot"><img src="../images/projects/pumpzone/dashboard.jpg" alt="PumpZone dashboard: 14 memberships run out this week, with a grid of every member coloured by status"></figure>
   </section>
 
   <section class="how">
-    <h2 class="slash sec-head">how-it-works<i>/</i></h2>
+    <h2 class="slash sec-head">what-it-does<i>/</i></h2>
     <article class="step grid2 ">
       <figure class="cell shot-cell"><img src="../images/projects/pumpzone/dashboard.jpg" alt="Dashboard with expiring, expired and unpaid counts" loading="lazy"></figure>
-      <div class="cell step-copy"><span class="num">01</span><h3>One screen for the desk</h3><p>Who expires this week, who already lapsed and who still owes money, counted the moment the page opens.</p></div>
+      <div class="cell step-copy"><span class="num">01</span><h3>Open it, know everything</h3><p>The first screen says who expires this week and who hasn't paid. No counting, no flipping pages.</p></div>
     </article>
     <article class="step grid2 flip">
-      <figure class="cell shot-cell"><img src="../images/projects/pumpzone/checkin.jpg" alt="Check-in screen showing a green ACTIVE result" loading="lazy"></figure>
-      <div class="cell step-copy"><span class="num">02</span><h3>Check-in replaces the logbook</h3><p>Tap a card on a USB reader or type a code, phone or nickname. Green, amber or red answers at a glance, and every visit is logged.</p></div>
+      <figure class="cell shot-cell"><img src="../images/projects/pumpzone/checkin.jpg" alt="Check-in screen showing a big green ACTIVE result" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">02</span><h3>Tap in at the door</h3><p>Members tap a card, or staff type a name. Green means good to go. Amber means expiring or owing. Red means stop.</p></div>
     </article>
     <article class="step grid2 ">
-      <figure class="cell shot-cell"><img src="../images/projects/pumpzone/members.jpg" alt="Members filtered to those who still owe money" loading="lazy"></figure>
-      <div class="cell step-copy"><span class="num">03</span><h3>Who owes, and how late</h3><p>Filter members by status. Each balance shows how many days late it is, with a text reminder ready to send.</p></div>
+      <figure class="cell shot-cell"><img src="../images/projects/pumpzone/members.jpg" alt="Members list filtered to those who still owe money" loading="lazy"></figure>
+      <div class="cell step-copy"><span class="num">03</span><h3>Chase what's owed</h3><p>One list of everyone with a balance and how late it is, with a reminder text ready to send.</p></div>
     </article>
     <article class="step grid2 flip">
       <figure class="cell shot-cell"><img src="../images/projects/pumpzone/payments.jpg" alt="Payments page with cash totals per staff member" loading="lazy"></figure>
-      <div class="cell step-copy"><span class="num">04</span><h3>Cash-up per staff</h3><p>Cash or GCash, each payment carries the name of whoever took it, so every floor counts its own drawer.</p></div>
+      <div class="cell step-copy"><span class="num">04</span><h3>Cash adds up by itself</h3><p>Every cash or GCash payment is signed by the staff who took it. Closing time is a quick count, not a guess.</p></div>
     </article>
-  </section>
-
-  <section class="how stack">
-    <h2 class="slash sec-head">the-stack<i>/</i></h2>
-    <div class="grid3 qs">
-      <div class="cell"><h3>Django 5.2</h3><p>Login, forms, the database layer and an admin panel come built in. One account per staff member means every payment says who took it, and the admin gives the owner a back office with no extra code.</p></div>
-      <div class="cell"><h3>SQLite</h3><p>A gym desk sees around a hundred visits a day, which one database file handles easily. A backup is a copy of that file, and WAL mode lets both floors' desks save at the same time.</p></div>
-      <div class="cell"><h3>Templates + one CSS file</h3><p>Plain HTML from Django with a single hand-written stylesheet. No JavaScript framework, no build step and no API layer, so it opens on any phone browser and one part-time person can maintain it.</p></div>
-    </div>
-    <p class="note"><svg class="ic"><use href="#i-doc"/></svg>It only runs locally for now: one PC at the desk serves the app over the gym's Wi-Fi. Online hosting is still being decided with the owner.</p>
   </section>
 
   <section class="how run">
     <h2 class="slash sec-head">try-it<i>/</i></h2>
-    <div class="grid2">
-      <div class="cell run-copy">
-        <h3>The online demo is only a snapshot</h3>
-        <p>GitHub Pages can only host fixed files, so it can't run Python or a database. The online demo is a read-only copy: you can click through every screen, but nothing saves.</p>
-        <p>To try the real, working system with its seeded data, download it and run it on your own PC. You need Python 3.12 or newer. Then sign in as <code>owner</code> with the password <code>pumpzone-demo</code> (a demo account that only exists on your PC).</p>
-      </div>
-      <div class="cell run-steps">
+    <ol class="grid3 qs easy">
+      <li class="cell"><span class="num">1</span><h3>Open the demo</h3><p>Hit "Try the live demo". It works on your phone too.</p></li>
+      <li class="cell"><span class="num">2</span><h3>Click anything</h3><p>Every screen is real, but the members are made up. Nothing you do gets saved, so you can't break it.</p></li>
+      <li class="cell"><span class="num">3</span><h3>Want it for real?</h3><p>The working version runs on one computer at the front desk. <a href="../index.html#contact">Message me</a> and I'll set it up.</p></li>
+    </ol>
+  </section>
+
+  <section class="how stack">
+    <h2 class="slash sec-head">why-it's-built-this-way<i>/</i></h2>
+    <div class="grid3 qs">
+      <div class="cell"><span class="tech">Runs locally</span><h3>No monthly server bill</h3><p>It lives on one PC at the desk and the staff's phones connect over the gym's Wi-Fi. It keeps working even when the internet drops.</p></div>
+      <div class="cell"><span class="tech">SQLite</span><h3>One file holds everything</h3><p>All members and payments sit in a single file. Backing up means copying that file to a flash drive or Google Drive.</p></div>
+      <div class="cell"><span class="tech">Django (Python) · plain HTML</span><h3>Nothing to install for staff</h3><p>It opens in any browser on a phone, tablet or laptop. Staff logins come built in, so every payment shows who took it.</p></div>
+    </div>
+    <details class="techy">
+      <summary><svg class="ic"><use href="#i-doc"/></svg>For techy folks: run the full, working version on your own PC</summary>
+      <div class="techy-body">
+        <p>The online demo is only a snapshot. GitHub Pages can't run Python or a database, so nothing saves there. Download it to try the real thing with seeded data. You need Python 3.12 or newer.</p>
         <ol class="cmds">
           <li><span>Download</span><code>git clone https://github.com/gedon111/pumpzone-gym-system</code></li>
           <li><span>Install</span><code>python -m venv .venv</code><code>.venv\Scripts\python.exe -m pip install -r requirements.txt</code></li>
-          <li><span>Seed</span><code>.venv\Scripts\python.exe manage.py migrate</code><code>.venv\Scripts\python.exe manage.py seed_demo</code></li>
-          <li><span>Run</span><code>.venv\Scripts\python.exe manage.py runserver</code><small>then open http://127.0.0.1:8000</small></li>
+          <li><span>Fill with demo data</span><code>.venv\Scripts\python.exe manage.py migrate</code><code>.venv\Scripts\python.exe manage.py seed_demo</code></li>
+          <li><span>Run</span><code>.venv\Scripts\python.exe manage.py runserver</code><small>open http://127.0.0.1:8000 and sign in as owner / pumpzone-demo (demo account, only on your PC)</small></li>
         </ol>
       </div>
-    </div>
-    <p class="note"><svg class="ic"><use href="#i-doc"/></svg>Every member in the demo is fake: phone numbers all start with 0900 000, and real data never goes into the repo.</p>
+    </details>
   </section>
 
   <nav class="pnext grid2">
